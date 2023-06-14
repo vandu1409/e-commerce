@@ -1,0 +1,216 @@
+ <!-- <div class="table-wrapper"> -->
+	<div class="table-title">
+		<div class="row">
+			<div class="col-4">
+				<div class="show-entries">
+					<span>Show</span>
+					<select v-model="selectedSize" @change="setSize(selectedSize)">
+						<option v-for="size in sizes" :value="size">{{ size }}
+						</option>
+					</select>
+					<span>entries</span>
+
+				</div>
+
+			</div>
+			<div class="col-4">
+				<h2 class="text-center">Danh sách hóa đơn</h2>
+			</div>
+
+		</div>
+	</div>
+	<table class="table table-bordered display expandable-table">
+		<thead style="background-color: blanchedalmond;">
+			<tr>
+			<tr>
+				<th>Mã HD</th>
+				<th>Ngày đặt</th>
+				<th>Người đặt</th>
+				<th>Tổng tiển</th>
+				<th>Giảm giá</th>
+				<th>Ghi chú</th>
+				<th>Trạng thái</th>
+
+				<th>Action</th>
+			</tr>
+		</thead>
+		<tbody>
+
+			<tr v-if="list.length==0">
+				<td colspan="8" class="text-center">
+					<h4>
+						Không có thuộc tính nào được tìm thấy !
+					</h4>
+				</td>
+			</tr>
+			<tr v-for="item in list">
+				<td>{{item.orderId}}</td>
+				<td>{{item.createDate}}</td>
+				<td>{{item.user.fullname}}</td>
+				<td>{{item.totalPrice |customCurrency}}</td>
+				<td>{{item.discount |customCurrency }}</td>
+				<td>{{item.notes}}</td>
+				<td> <span :class="getStatusClass(item.status)">{{
+						getStatusNameText(item.status) }}</span></td>
+
+				<td>
+					<div>
+
+
+
+
+						<!-- Button trigger modal -->
+						<button type="button"
+							class="btn btn-outline-primary-2 px-s py-2"
+							data-toggle="modal"
+							:data-target="'#exampleModal'+item.orderId">Chi tiết <i
+								class="icon-long-arrow-right"></i></button>
+
+
+
+						<!-- Modal -->
+						<div class="modal fade " :id="'exampleModal'+item.orderId"
+							tabindex="-1" role="dialog"
+							aria-labelledby="exampleModalLabel" aria-hidden="true">
+							<div class="modal-dialog modal-xl" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title"
+											id="exampleModalLabel">Chi tiết
+										</h5>
+										<button type="button" class="close"
+											data-dismiss="modal" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div class="modal-body w-100">
+										<table class="w-100 text-center">
+											<thead>
+												<tr>
+													<th>Ảnh</th>
+													<th>Tên</th>
+													<th>Giá</th>
+													<th>Số lượng</th>
+													<th>Tổng tiển</th>
+
+												</tr>
+											</thead>
+
+											<tbody class=" text-center">
+												<tr
+													v-for="orderItem in item.orderItems">
+													<td><img :src="'/phonestore/images/'+orderItem.image"
+															alt=""></td>
+													<td class="text-center">
+														{{orderItem.productDetailsName}}
+													</td>
+													<td>{{orderItem.price |
+														customCurrency}}
+													</td>
+													<td>{{orderItem.quantity}}</td>
+													<td>{{orderItem.totalPrice
+														|customCurrency}}
+													</td>
+												</tr>
+											</tbody>
+										</table>
+
+										<div class="row mt-4 w-100 word-break">
+											<div class="col-6 "
+												style="white-space: inherit ;">
+												<h4>
+													<ul>
+														<li>
+															<h6>
+																Tên người nhận :
+																{{item.user.fullname}}
+															</h6>
+														</li>
+														<li>
+															<h6>Phương thức thanh toán : {{item.payments.paymentMethod=='CASH'?'Thanh toán khi nhận  hàng':'VNPAY'}}</h6>
+														
+														</li>
+
+														<li>
+															<h6>Trạng thái thánh
+																toán :
+																{{item.payments.paymentStatus}}
+															</h6>
+														</li>
+													</ul>
+												</h4>
+											</div>
+											<div class="col-6 word-break"
+												style="white-space: normal !important;">
+												<h6 class="text-center"
+													style="white-space: unset !important ;">
+													Địa chỉ:
+													{{item.address.address}}
+												</h6>
+												<h6 v-if="item.voucher">
+													<ul>
+														<li>
+															<h6> Mã giảm giá :
+																{{item.voucher.name}}
+															</h6>
+
+														</li>
+														<li>
+															<h6> Giảm giá
+																:-{{item.discount
+																|customCurrency}}
+															</h6>
+														</li>
+													</ul>
+												</h6>
+												<h6>
+													Tổng tiền : {{item.totalPrice |
+													customCurrency}}
+												</h6>
+											</div>
+
+
+										</div>
+									</div>
+									<div class="modal-footer">
+										<button type="button"
+											class="btn btn-primary"
+											data-dismiss="modal">Đóng</button>
+
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</td>
+			</tr>
+
+
+
+
+		</tbody>
+	</table>
+	<div class="clearfix mt-3">
+		<div>
+			<span>Trạng thái</span>
+			<select v-model="status" class="" @change="goToPage(1)">
+				<option v-for="status in listStatus" :value="status.id">{{
+					status.name }}
+				</option>
+			</select>
+
+		</div>
+
+		<ul class="pagination">
+			<li class="page-item "><a @click="prev()" class="page-link">Previous</a>
+			</li>
+			<li class="page-item" v-for="pageNumber in getPaginationArray()"
+				:class="{ 'active': pageNumber == currentPage }">
+				<a class="page-link" @click="goToPage(pageNumber)">{{ pageNumber
+					}}</a>
+			</li>
+
+			<li class="page-item"><a class="page-link" @click="next()">Next</a></li>
+		</ul>
+	</div>

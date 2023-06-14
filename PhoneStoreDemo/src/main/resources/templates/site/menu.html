@@ -1,0 +1,178 @@
+<header class="header header-intro-clearance header-3" id="myheader" th:fragment="menu">
+
+
+    <div class="header-middle">
+        <div class="container">
+            <div class="header-left">
+                <button class="mobile-menu-toggler">
+                    <span class="sr-only">Toggle mobile menu</span>
+                    <i class="icon-bars"></i>
+                </button>
+
+                <a href="index.html" class="logo">
+                    <img src="/site/assets/images/demos/demo-3/logo.png" alt="Molla Logo" width="105" height="25">
+                </a>
+            </div><!-- End .header-left -->
+
+            <div class="header-center">
+                <div class="header-search header-search-extended header-search-visible d-none d-lg-block">
+                    <a href="#" class="search-toggle" role="button"><i class="icon-search"></i></a>
+                    <form action="/tim-kiem?query='+$('#searchQuery').val()" method="get">
+                        <div class="header-search-wrapper search-wrapper-wide">
+                            <label for="q" class="sr-only">Search</label>
+                            <button class="btn btn-primary" type="button"
+                                onclick="window.location.href= '/tim-kiem?query='+$('#searchQuery').val()"><i
+                                    class="icon-search"></i></button>
+                            <input type="search" class="form-control" name="query" id="searchQuery"
+                                placeholder="Search product ..." required>
+                        </div><!-- End .header-search-wrapper -->
+                    </form>
+                </div><!-- End .header-search -->
+            </div>
+
+            <div class="header-right">
+                <!-- <div class="w-100 ml-5">
+                   <h6 class="text-white">HOT LINE</h6>
+                        <p>Yêu thích</p>
+                    </a>
+                </div> -->
+                <!-- End .compare-dropdown -->
+
+
+                <div class="wishlist">
+                    <a href="/danh-sach-yeu-thich" title="Wishlist">
+                        <div class="icon">
+                            <i class="icon-heart-o"></i>
+                            <!-- <span class="wishlist-count badge">3</span> -->
+                        </div>
+                        <p>Yêu thích</p>
+                    </a>
+                </div><!-- End .compare-dropdown -->
+
+                <div class="dropdown cart-dropdown">
+                    <a href="/gio-hang" class="dropdown-toggle">
+                        <div class="icon">
+                            <i class="icon-shopping-cart"></i>
+                            <!-- <span class="cart-count">2</span> -->
+                        </div>
+                        <p>Giỏ hàng</p>
+                    </a>
+
+
+                </div><!-- End .cart-dropdown -->
+
+                <div class="dropdown compare-dropdown">
+                    <th:block th:if="${session.loggedUser == null}">
+                        <a href="/login" class="dropdown-toggle" role="button"
+                        aria-haspopup="true" aria-expanded="false" data-display="static" title="Compare Products"
+                        aria-label="Compare Products">
+                        <div class="icon">
+                            <i class='bx bx-user-circle'></i>
+                        </div>
+                        <p>Tài khoản</p>
+                    </a>
+                    </th:block>
+                    <th:block th:if="${session.loggedUser != null}">
+                        <a href="/profile" class="dropdown-toggle" role="button"
+                        aria-haspopup="true" aria-expanded="false" data-display="static" title="Compare Products"
+                        aria-label="Compare Products">
+                        <div class="icon">
+                            <i class='bx bx-user-circle'></i>
+                        </div>
+                        <p>Tài khoản</p>
+                    </a>
+                    </th:block>
+
+                   
+
+
+                </div><!-- End .compare-dropdown -->
+                <div class="dropdown compare-dropdown">
+                    <th:block th:if="${session.loggedUser != null}">
+                        <a href="/logout" class="dropdown-toggle" role="button"
+                        aria-haspopup="true" aria-expanded="false" data-display="static" title="Compare Products"
+                        aria-label="Compare Products">
+                        <div class="icon">
+                            <i class='bx bx-log-in'></i>
+                        </div>
+                        <p>Đăng xuất</p>
+                    </a>
+                    </th:block>
+
+                   
+
+
+                </div><!-- End .compare-dropdown -->
+
+
+            </div><!-- End .header-right -->
+
+        </div><!-- End .container -->
+    </div><!-- End .header-middle -->
+    <div class="header-bottom sticky-header">
+        <div class="container">
+            <div class="header-left">
+                <div class="dropdown category-dropdown">
+                    <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false" data-display="static" title="Browse Categories">
+                        Danh sách <i class="icon-angle-down"></i>
+                    </a>
+
+                    <div class="dropdown-menu">
+                        <nav class="side-nav">
+                            <ul class="menu-vertical sf-arrows">
+
+                                <li th:each="brand : ${listBrand}">
+                                    <a th:href="@{'/dtdd/'+${brand.brandCode}}" th:text="${brand.name}"></a>
+                                </li>
+                            </ul><!-- End .menu-vertical -->
+                        </nav><!-- End .side-nav -->
+                    </div><!-- End .dropdown-menu -->
+                </div><!-- End .category-dropdown -->
+            </div><!-- End .header-left -->
+
+            <div class="header-center">
+                <nav class="main-nav">
+                    <ul class="menu sf-arrows">
+                        <li class="megamenu-container active">
+                            <a href="/" class="">Trang chủ</a>
+
+
+                        </li>
+                        <li th:each="category : ${listCategory}">
+                            <a th:href="@{'/vandustore/'+${category.categoryCode}}" class="sf-with-ul"
+                                th:text="${category.name}"></a>
+
+                            <ul>
+                                <li th:each="brand : ${category.brands}">
+                                    <a class="sf-with-ul" th:text="${brand.name}"
+                                        th:href="@{'/vandustore/'+${category.categoryCode} +'/'+${brand.brandCode}}"></a>
+
+                                    <ul th:if="${brand.productSeries.size() > 0}">
+                                        <li th:each="series : ${brand.productSeries}"><a th:text="${series.name}"
+                                                th:href="@{'/vandustore/'+${category.categoryCode} +'/'+${series.seriesCode}}"></a>
+
+                                            <ul th:if="${series.products.size() > 0}">
+                                                <li th:each="p : ${series.products}"><a
+                                                        th:href="@{'/vandustore/'+${category.categoryCode} +'/'+${p.productCode}}"
+                                                        th:text="${p.name}"></a></li>
+                                            </ul>
+                                        </li>
+
+                                    </ul>
+                                </li>
+
+
+
+                            </ul>
+
+                        </li>
+                    </ul>
+                    <!-- End .menu -->
+                </nav><!-- End .main-nav -->
+            </div><!-- End .header-center -->
+
+
+        </div><!-- End .container -->
+    </div><!-- End .header-bottom -->
+</header><!-- End .header -->

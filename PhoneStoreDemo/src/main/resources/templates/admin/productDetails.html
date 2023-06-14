@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Skydash Admin</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="/vendors/feather/feather.css">
+    <link rel="stylesheet" href="/vendors/ti-icons/css/themify-icons.css">
+    <link rel="stylesheet" href="/vendors/css/vendor.bundle.base.css">
+    <!-- endinject -->
+    <!-- Plugin css for this page -->
+    <link rel="stylesheet" href="/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
+    <link rel="stylesheet" href="/vendors/ti-icons/css/themify-icons.css">
+    <link rel="stylesheet" type="text/css" href="/js/select.dataTables.min.css">
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="/css/vertical-layout-light/style.css">
+    <link rel="stylesheet" href="/vendors/select2/select2.min.css">
+    <link rel="stylesheet" href="/vendors/select2-bootstrap-theme/select2-bootstrap.min.css">
+
+
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <!-- endinject -->
+    <link rel="shortcut icon" href="images/favicon.png" />
+    <link rel="stylesheet" href="/css/table.css">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <!-- Include Toast plugin -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <link rel="stylesheet" href="/dist/jquery.toast.min.css">
+    <script src="/dist/jquery.toast.min.js"></script>
+</head>
+
+<style>
+
+</style>
+<script>
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+        // Animate select box length
+        var searchInput = $(".search-box input");
+        var inputGroup = $(".search-box .input-group");
+        var boxWidth = inputGroup.width();
+        searchInput.focus(function () {
+            inputGroup.animate({
+                width: "300"
+            });
+        }).blur(function () {
+            inputGroup.animate({
+                width: boxWidth
+            });
+        });
+    });
+</script>
+</head>
+
+<body>
+    <div class="container-scroller">
+        <!-- partial:partials/_navbar.html -->
+        <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+            <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+
+            </div>
+            <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+                <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+                    <span class="icon-menu"></span>
+                </button>
+                <ul class="navbar-nav mr-lg-2">
+                    <li class="nav-item nav-search d-none d-lg-block">
+                        <div class="input-group">
+                            <div class="input-group-prepend hover-cursor" id="navbar-search-icon">
+                                <span class="input-group-text" id="search">
+                                    <i class="icon-search"></i>
+                                </span>
+                            </div>
+                            <input type="text" class="form-control" id="navbar-search-input" placeholder="Search now"
+                                aria-label="search" aria-describedby="search">
+                        </div>
+                    </li>
+                </ul>
+                <ul class="navbar-nav navbar-nav-right">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#"
+                            data-toggle="dropdown">
+                            <i class="icon-bell mx-0"></i>
+                            <span class="count"></span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list"
+                            aria-labelledby="notificationDropdown">
+                            <p class="mb-0 font-weight-normal float-left dropdown-header">Notifications</p>
+                            <a class="dropdown-item preview-item">
+                                <div class="preview-thumbnail">
+                                    <div class="preview-icon bg-success">
+                                        <i class="ti-info-alt mx-0"></i>
+                                    </div>
+                                </div>
+                                <div class="preview-item-content">
+                                    <h6 class="preview-subject font-weight-normal">Application Error</h6>
+                                    <p class="font-weight-light small-text mb-0 text-muted">
+                                        Just now
+                                    </p>
+                                </div>
+                            </a>
+                            <a class="dropdown-item preview-item">
+                                <div class="preview-thumbnail">
+                                    <div class="preview-icon bg-warning">
+                                        <i class="ti-settings mx-0"></i>
+                                    </div>
+                                </div>
+                                <div class="preview-item-content">
+                                    <h6 class="preview-subject font-weight-normal">Settings</h6>
+                                    <p class="font-weight-light small-text mb-0 text-muted">
+                                        Private message
+                                    </p>
+                                </div>
+                            </a>
+                            <a class="dropdown-item preview-item">
+                                <div class="preview-thumbnail">
+                                    <div class="preview-icon bg-info">
+                                        <i class="ti-user mx-0"></i>
+                                    </div>
+                                </div>
+                                <div class="preview-item-content">
+                                    <h6 class="preview-subject font-weight-normal">New user registration</h6>
+                                    <p class="font-weight-light small-text mb-0 text-muted">
+                                        2 days ago
+                                    </p>
+                                </div>
+                            </a>
+                        </div>
+                    </li>
+                    <li class="nav-item nav-profile dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
+                            <img src="images/faces/face28.jpg" alt="profile" />
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right navbar-dropdown"
+                            aria-labelledby="profileDropdown">
+                            <a class="dropdown-item">
+                                <i class="ti-settings text-primary"></i>
+                                Settings
+                            </a>
+                            <a class="dropdown-item">
+                                <i class="ti-power-off text-primary"></i>
+                                Logout
+                            </a>
+                        </div>
+                    </li>
+
+                </ul>
+                <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
+                    data-toggle="offcanvas">
+                    <span class="icon-menu"></span>
+                </button>
+            </div>
+        </nav>
+        <!-- partial -->
+        <div class="container-fluid page-body-wrapper">
+            <!-- partial:partials/_settings-panel.html -->
+            <div class="theme-setting-wrapper">
+                <div id="settings-trigger"><i class="ti-settings"></i></div>
+                <div id="theme-settings" class="settings-panel">
+                    <i class="settings-close ti-close"></i>
+                    <p class="settings-heading">SIDEBAR SKINS</p>
+                    <div class="sidebar-bg-options selected" id="sidebar-light-theme">
+                        <div class="img-ss rounded-circle bg-light border mr-3"></div>Light
+                    </div>
+                    <div class="sidebar-bg-options" id="sidebar-dark-theme">
+                        <div class="img-ss rounded-circle bg-dark border mr-3"></div>Dark
+                    </div>
+                    <p class="settings-heading mt-2">HEADER SKINS</p>
+                    <div class="color-tiles mx-0 px-4">
+                        <div class="tiles success"></div>
+                        <div class="tiles warning"></div>
+                        <div class="tiles danger"></div>
+                        <div class="tiles info"></div>
+                        <div class="tiles dark"></div>
+                        <div class="tiles default"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- partial -->
+            <!-- partial:partials/_sidebar.html -->
+
+            <!-- partial -->
+            <th:block th:replace="admin/menu :: menu"></th:block>
+
+            <div class="main-panel" id="myapp">
+
+                <div class=" content-wrapper">
+
+                    <div>
+                        <button type="button" @click="clear()" class="btn btn-success" data-toggle="modal"
+                            data-target="#exampleModal">
+                            <i class='bx bx-plus'></i> Thêm phiên bản
+                        </button>
+                    </div>
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-xl" role="document">
+                            <div class="modal-content ">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="form-title">Thêm Phiên bản</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+
+                                <div class="modal-body">
+                                    <form class="forms-sample" enctype="multipart/form-data">
+
+
+                                        <div class="form-group">
+                                            <label for="exampleInputName1">ID phiên bản</label>
+                                            <input type="text" class="form-control"
+                                                v-model="productDetails.productVersionId" disabled>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <label for="exampleInputName1">Giá nhập</label>
+                                                    <input type="text" class="form-control" placeholder="giá nhập"
+                                                        v-model="productDetails.importPrice">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <label for="exampleInputName1">Giá bán</label>
+                                                    <input type="text" class="form-control" placeholder="giá"
+                                                        v-model="productDetails.price">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-lg-12">
+                                                <label>File upload</label>
+                                                <input type="file" name="img" class="file-upload-default"
+                                                    id="product-image">
+                                                <div class="input-group col-xs-12">
+                                                    <input type="text" class="form-control file-upload-info" disabled
+                                                        placeholder="Upload Image" id="upload-image">
+                                                    <span class="input-group-append">
+                                                        <button class="file-upload-browse btn btn-danger"
+                                                            type="button"><i
+                                                                class="ti-upload btn-icon-prepend"></i>&nbsp;
+                                                            Upload</button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <label for="exampleInputName1">Số lượng</label>
+                                                    <input type="text" class="form-control" placeholder="số lượng"
+                                                        v-model="productDetails.quantity">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-6">
+                                                <div class="form-group">
+
+                                                    <label>Màu sắc</label> <br>
+                                                    <select name="" id="productDetails-colorId"
+                                                        class="js-example-basic-single p-0 m-0"
+                                                        style="width: 100%;">
+                                                        <option value="0">Chọn màu sắc</option>
+                                                        <option th:each="item : ${listColor}" th:value="${item.id}"
+                                                            th:text="${item.name}"></option>
+                                                    </select>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+
+
+
+                                        <input type="text" id="productDetailsId"
+                                            v-model="productDetails.productDetailsId" hidden>
+
+
+
+
+
+                                        <button type="button" @click="saveOrUpdate()"
+                                            class="btn btn-primary mr-2">Submit</button>
+
+                                    </form>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive shadow-lg rounded">
+                        <div class="table-wrapper">
+                            <div class="table-title">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <div class="show-entries">
+                                            <span>Show</span>
+                                            <select v-model="selectedSize" @change="setSize(selectedSize)">
+                                                <option v-for="size in sizes" :value="size">{{ size }}</option>
+                                            </select>
+                                            <span>entries</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <h2 class="text-center">Customer <b>Details</b></h2>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="search-box">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i
+                                                        class="material-icons">&#xE8B6;</i></span>
+                                                <input type="text" class="form-control" placeholder="Search&hellip;">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <table class="table table-bordered display expandable-table">
+                                <thead>
+                                    <tr>
+                                        <th>Ảnh </th>
+                                        <th>Tên sản phẩm</th>
+                                        <th>Tên phiên bản</th>
+                                        <th>Giá nhập</th>
+                                        <th>Giá bán</th>
+                                        <th>Giá đã giảm</th>
+                                        <th>Số lượng</th>
+
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+
+                                    <tr v-for="item in list">
+
+                                        <td><img :src="'/phonestore/images/'+item.image" alt=""
+                                                height="150px">
+                                        <td>{{item.productVersion.product.name}}</td>
+                                        </td>
+                                        <td>{{item.productVersion.versionName}} - {{item.color.name}}</td>
+                                        <td>{{item.importPrice | customCurrency}}</td>
+                                        <td>{{item.price | customCurrency}}</td>
+                                        <td>{{item.discountedPrice | customCurrency}}</td>
+                                        <td>{{item.quantity}}</td>
+
+
+                                        <td>
+
+                                            <div>
+
+                                                <a @click="edit(item.productDetailsId)"
+                                                    class="btn btn-primary px-4 py-2 text-white"><i
+                                                        class='bx bxs-edit'></i></a>
+
+                                                <a @click="deleteProductDetails(item.productDetailsId)"
+                                                    class="btn btn-danger px-4 py-2 text-white"><i
+                                                        class='bx bxs-trash'></i></a>
+
+
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                            <div class="clearfix mt-3">
+                                <div class="hint-text">Showing <b>{{totalElements}}</b> out of <b>{{totalElements}}</b>
+                                    entries
+                                </div>
+                                <ul class="pagination">
+                                    <li class="page-item "><a @click="prev()" class="page-link">Previous</a></li>
+                                    <li class="page-item" v-for="pageNumber in getPaginationArray()"
+                                        :class="{ 'active': pageNumber == currentPage }">
+                                        <a class="page-link" @click="goToPage(pageNumber)">{{ pageNumber }}</a>
+                                    </li>
+
+                                    <li class="page-item"><a class="page-link" @click="next()">Next</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- content-wrapper ends -->
+                <!-- partial:partials/_footer.html -->
+                <footer class="footer">
+                    <div class="d-sm-flex justify-content-center justify-content-sm-between">
+                        <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2021.
+                            Premium <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap admin
+                                template</a> from BootstrapDash.
+                            All rights reserved.</span>
+                        <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made
+                            with <i class="ti-heart text-danger ml-1"></i></span>
+                    </div>
+                    <div class="d-sm-flex justify-content-center justify-content-sm-between">
+                        <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Distributed by <a
+                                href="https://www.themewagon.com/" target="_blank">Themewagon</a></span>
+                    </div>
+                </footer>
+                <!-- partial -->
+            </div>
+            <!-- main-panel ends -->
+        </div>
+        <!-- page-body-wrapper ends -->
+    </div>
+    <!-- container-scroller -->
+
+
+    <script>
+
+        var vue = new Vue({
+            el: '#myapp',
+            data: {
+                list: [],
+                productDetails: {},
+                currentPage: 1,
+                pageSize: 1,
+                totalPages: 5,
+                totalElements: 5,
+                keyword: ''
+            },
+            filters: {
+                customCurrency: function (input, symbol) {
+                    if (!input) return '';
+
+                    var sign = (symbol !== undefined) ? symbol : 'VNĐ';
+
+                    input = input.toFixed(0).replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1,");
+
+                    return input + ' ' + sign;
+                }
+            },
+            methods: {
+                goToPage(pageNumber) {
+                    var self = this
+                    self.currentPage = pageNumber;
+
+
+                    axios.get("/admin/product-details-management/getAll/" + self.productDetails.productVersionId + "?page=" + self.currentPage + "&size=" + self.pageSize + "&keyword=" + self.keyword)
+                        .then(function (response) {
+                            self.list = response.data.content;
+                            self.totalPages = response.data.totalPages
+                            self.totalElements = response.data.totalElements
+
+                            var params = new URLSearchParams(window.location.search);
+                            params.set('page', self.currentPage);
+                            params.set('size', self.pageSize);
+                            params.set('keyword', self.keyword);
+                            window.history.pushState({}, '', '?' + params.toString());
+
+
+                        });
+                },
+                setSize(size) {
+
+                    this.pageSize = size
+                    this.currentPage = 1
+                    this.goToPage(this.currentPage);
+                },
+                next() {
+                    if (this.currentPage < this.totalPages) {
+                        this.currentPage++;
+                        this.goToPage(this.currentPage)
+                    }
+                },
+
+                prev() {
+                    if (this.currentPage > 1) {
+                        this.currentPage--;
+                        this.goToPage(this.currentPage)
+                    }
+                },
+
+                clear() {
+                    this.productDetails = {};
+                    this.productDetails.productVersionId = [[${ productVersion.productVersionId }]]
+                },
+                getPaginationArray: function () {
+                    let startPage = Math.max(1, this.currentPage - 2);
+                    let endPage = Math.min(startPage + 4, this.totalPages);
+
+                    let arr = [];
+                    for (let i = startPage; i <= endPage; i++) {
+                        arr.push(i);
+                    }
+                    return arr;
+                },
+                edit: function (id) {
+                    var self = this
+
+                    axios.get("/admin/product-details-management/find/" + id)
+                        .then(function (response) {
+                            self.productDetails = response.data
+                            self.productDetails.productVersionId = [[${ productVersion.productVersionId }]]
+                            $('#exampleModal').modal();
+                        });
+                },
+                saveOrUpdate() {
+                    var self = this
+                    var formData = new FormData()
+                    var fileInput = $('#product-image')[0];
+                    self.productDetails.colorId = $('#productDetails-colorId').val()
+
+                    if (fileInput.files.length > 0) {
+                        formData.append('fileImgae', fileInput.files[0]);
+                        // Gửi formData tới server
+                    }
+
+                    formData.append('productDetailsId', self.productDetails.productDetailsId !== undefined ? self.productDetails.productDetailsId : '')
+                    formData.append('productVersionId',self.productDetails.productVersionId)
+                    formData.append('price',self.productDetails.price)
+                    formData.append('importPrice',self.productDetails.importPrice)
+                    formData.append('quantity',self.productDetails.quantity)
+                    formData.append('colorId',self.productDetails.colorId)
+
+                   
+                    axios.post('/admin/product-details-management/saveOrUpdate', formData)
+                        .then((res) => {
+                            var message = self.productDetails.productDetailsId ? 'Cập nhật sản phẩm thành công!' : 'Thêm sản phẩm thành công!'
+
+                            Swal.fire('Thông báo', message, 'success');
+                            self.clear()
+                            self.goToPage(self.currentPage)
+                        })
+                        .catch((error) => {
+                            Swal.fire('Lỗi', 'Đã có lỗi xảy ra vui lòng kiểm tra lại!', 'error');
+                            self.goToPage(self.currentPage)
+                        })
+
+                },
+                deleteProductDetails: function (id) {
+
+                    var self = this
+
+                    axios.delete('/admin/product-details-management/delete/' + id)
+                        .then(function (response) {
+                            console.log(self.totalPages)
+                            if (self.currentPage == self.totalPages && self.list.length == 1) {
+                                self.totalPages = 1
+                            }
+                            // Kiểm tra nếu page hiện tại lớn hơn tổng số page thì trang chuyển đến page cuối cùng
+                            if (self.currentPage > self.totalPages) {
+                                self.goToPage(self.totalPages)
+                            } else {
+                                // Nếu page hiện tại nhỏ hơn hoặc bằng tổng số page thì trang chuyển đến page hiện tại
+                                self.goToPage(self.currentPage)
+                            }
+
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true,
+                                didOpen: (toast) => {
+                                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                }
+                            });
+
+                            Toast.fire({
+                                icon: 'success',
+                                title: 'Xóa sản phẩm thành công'
+                            });
+
+
+                        })
+                        .catch(function (error) {
+                            self.goToPage(self.currentPage)
+                            Swal.fire(
+                                'Lỗi',
+                                'Xóa sản phẩm không thành công',
+                                'error'
+                            );
+                        });
+                },
+
+
+            }, created() {
+                const queryString = window.location.search;
+                const urlParams = new URLSearchParams(queryString);
+                this.currentPage = parseInt(urlParams.get('page')) || 1;
+                this.pageSize = parseInt(urlParams.get('size')) || 3;
+                this.keyword = urlParams.get('keyword') || '';
+
+                this.productDetails.productVersionId = [[${ productVersion.productVersionId }]]
+
+                this.goToPage(this.currentPage)
+
+                this.sizes = [1, 3, 6, 9, 12, 15];
+
+                this.selectedSize = parseInt(this.pageSize)
+            }
+        })
+
+
+        const inputElement = document.querySelector('input[type="file"]');
+
+        document.querySelector('.file-upload-browse').addEventListener('click', (event) => {
+
+            event.preventDefault();
+
+            inputElement.click();
+        });
+        inputElement.addEventListener('change', (event) => {
+
+            const selectedFiles = inputElement.files;
+            const fileName = selectedFiles[0].name;
+            // Hiển thị tên tệp lên thẻ HTML
+            const fileNameElement = document.querySelector('.file-upload-info');
+            fileNameElement.value = fileName;
+            fileNameElement.disabled = true;
+        });
+
+
+    </script>
+    <script src="/vendors/js/vendor.bundle.base.js"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page -->
+    <script src="/vendors/typeahead.js/typeahead.bundle.min.js"></script>
+    <script src="/vendors/chart.js/Chart.min.js"></script>
+    <script src="/vendors/datatables.net/jquery.dataTables.js"></script>
+    <script src="/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
+    <script src="/js/dataTables.select.min.js"></script>
+
+    <!-- End plugin js for this page -->
+    <!-- inject:js -->
+    <script src="/js/off-canvas.js"></script>
+    <script src="/js/hoverable-collapse.js"></script>
+    <script src="/js/template.js"></script>
+    <script src="/js/settings.js"></script>
+    <!-- endinject -->
+    <!-- Custom js for this page-->
+    <script src="/js/dashboard.js"></script>
+    <script src="/js/Chart.roundedBarCharts.js"></script>
+
+    <script src="/vendors/select2/select2.min.js"></script>
+
+
+
+    <!-- Custom js for this page-->
+
+    <script src="/js/typeahead.js"></script>
+    <script src="/js/select2.js"></script>
+    <!-- End custom js for this page-->
+</body>
+
+</html>

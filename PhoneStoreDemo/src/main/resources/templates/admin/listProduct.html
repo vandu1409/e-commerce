@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Skydash Admin</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="/vendors/feather/feather.css">
+    <link rel="stylesheet" href="/vendors/ti-icons/css/themify-icons.css">
+    <link rel="stylesheet" href="/vendors/css/vendor.bundle.base.css">
+    <!-- endinject -->
+    <!-- Plugin css for this page -->
+    <link rel="stylesheet" href="/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
+    <link rel="stylesheet" href="/vendors/ti-icons/css/themify-icons.css">
+    <link rel="stylesheet" type="text/css" href="/js/select.dataTables.min.css">
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="/css/vertical-layout-light/style.css">
+    <!-- <link rel="stylesheet" href="/vendors/select2/select2.min.css"> -->
+    <!-- <link rel="stylesheet" href="/vendors/select2-bootstrap-theme/select2-bootstrap.min.css"> -->
+
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <!-- endinject -->
+    <link rel="shortcut icon" href="images/favicon.png" />
+    <link rel="stylesheet" href="/css/table.css">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <!-- Include Toast plugin -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <link rel="stylesheet" href="/dist/jquery.toast.min.css">
+
+    <link rel="stylesheet" href="/select2/css/select2.min.css">
+    <link rel="stylesheet" href="/select2/css/select2-bootstrap4.css">
+
+    <script src="/dist/jquery.toast.min.js"></script>
+</head>
+
+<style>
+
+</style>
+<script>
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+        // Animate select box length
+        var searchInput = $(".search-box input");
+        var inputGroup = $(".search-box .input-group");
+        var boxWidth = inputGroup.width();
+        searchInput.focus(function () {
+            inputGroup.animate({
+                width: "300"
+            });
+        }).blur(function () {
+            inputGroup.animate({
+                width: boxWidth
+            });
+        });
+    });
+</script>
+</head>
+
+<body>
+    <div class="container-scroller">
+        <!-- partial:partials/_navbar.html -->
+        <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+            <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+
+            </div>
+            <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+                <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+                    <span class="icon-menu"></span>
+                </button>
+                <ul class="navbar-nav mr-lg-2">
+                    <li class="nav-item nav-search d-none d-lg-block">
+                        <div class="input-group">
+                            <div class="input-group-prepend hover-cursor" id="navbar-search-icon">
+                                <span class="input-group-text" id="search">
+                                    <i class="icon-search"></i>
+                                </span>
+                            </div>
+                            <input type="text" class="form-control" id="navbar-search-input" placeholder="Search now"
+                                aria-label="search" aria-describedby="search">
+                        </div>
+                    </li>
+                </ul>
+                <ul class="navbar-nav navbar-nav-right">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#"
+                            data-toggle="dropdown">
+                            <i class="icon-bell mx-0"></i>
+                            <span class="count"></span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list"
+                            aria-labelledby="notificationDropdown">
+                            <p class="mb-0 font-weight-normal float-left dropdown-header">Notifications</p>
+                            <a class="dropdown-item preview-item">
+                                <div class="preview-thumbnail">
+                                    <div class="preview-icon bg-success">
+                                        <i class="ti-info-alt mx-0"></i>
+                                    </div>
+                                </div>
+                                <div class="preview-item-content">
+                                    <h6 class="preview-subject font-weight-normal">Application Error</h6>
+                                    <p class="font-weight-light small-text mb-0 text-muted">
+                                        Just now
+                                    </p>
+                                </div>
+                            </a>
+                            <a class="dropdown-item preview-item">
+                                <div class="preview-thumbnail">
+                                    <div class="preview-icon bg-warning">
+                                        <i class="ti-settings mx-0"></i>
+                                    </div>
+                                </div>
+                                <div class="preview-item-content">
+                                    <h6 class="preview-subject font-weight-normal">Settings</h6>
+                                    <p class="font-weight-light small-text mb-0 text-muted">
+                                        Private message
+                                    </p>
+                                </div>
+                            </a>
+                            <a class="dropdown-item preview-item">
+                                <div class="preview-thumbnail">
+                                    <div class="preview-icon bg-info">
+                                        <i class="ti-user mx-0"></i>
+                                    </div>
+                                </div>
+                                <div class="preview-item-content">
+                                    <h6 class="preview-subject font-weight-normal">New user registration</h6>
+                                    <p class="font-weight-light small-text mb-0 text-muted">
+                                        2 days ago
+                                    </p>
+                                </div>
+                            </a>
+                        </div>
+                    </li>
+                    <li class="nav-item nav-profile dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
+                            <img src="images/faces/face28.jpg" alt="profile" />
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right navbar-dropdown"
+                            aria-labelledby="profileDropdown">
+                            <a class="dropdown-item">
+                                <i class="ti-settings text-primary"></i>
+                                Settings
+                            </a>
+                            <a class="dropdown-item">
+                                <i class="ti-power-off text-primary"></i>
+                                Logout
+                            </a>
+                        </div>
+                    </li>
+
+                </ul>
+                <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
+                    data-toggle="offcanvas">
+                    <span class="icon-menu"></span>
+                </button>
+            </div>
+        </nav>
+        <!-- partial -->
+        <div class="container-fluid page-body-wrapper">
+            <!-- partial:partials/_settings-panel.html -->
+            <div class="theme-setting-wrapper">
+                <div id="settings-trigger"><i class="ti-settings"></i></div>
+                <div id="theme-settings" class="settings-panel">
+                    <i class="settings-close ti-close"></i>
+                    <p class="settings-heading">SIDEBAR SKINS</p>
+                    <div class="sidebar-bg-options selected" id="sidebar-light-theme">
+                        <div class="img-ss rounded-circle bg-light border mr-3"></div>Light
+                    </div>
+                    <div class="sidebar-bg-options" id="sidebar-dark-theme">
+                        <div class="img-ss rounded-circle bg-dark border mr-3"></div>Dark
+                    </div>
+                    <p class="settings-heading mt-2">HEADER SKINS</p>
+                    <div class="color-tiles mx-0 px-4">
+                        <div class="tiles success"></div>
+                        <div class="tiles warning"></div>
+                        <div class="tiles danger"></div>
+                        <div class="tiles info"></div>
+                        <div class="tiles dark"></div>
+                        <div class="tiles default"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- partial -->
+            <!-- partial:partials/_sidebar.html -->
+            <th:block th:replace="admin/menu :: menu"></th:block>
+            <!-- partial -->
+            <div class="main-panel" id="myapp">
+
+                <div class=" content-wrapper">
+                    <div>
+                        <a href="/admin/product/add" class="btn btn-success"><i class='bx bx-plus'></i> Thêm sản
+                            phẩm</a>
+                    </div>
+                    <div class="table-responsive shadow-lg rounded">
+                        <div class="table-wrapper">
+                            <div class="table-title">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <div class="show-entries">
+                                            <span>Show</span>
+                                            <select v-model="selectedSize" @change="setSize(selectedSize)">
+                                                <option v-for="size in sizes" :value="size">{{ size }}</option>
+                                            </select>
+                                            <span>entries</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <h2 class="text-center">Danh sách <b>sản phẩm</b></h2>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="search-box">
+                                            <div class="input-group">
+                                                <!-- <a class="input-group-addon"><i class='bx bx-search-alt' ></i></a> -->
+                                                <input type="text" class="form-control" placeholder="Search&hellip;"
+                                                    v-model="keyword">
+                                                <a @click="goToPage(1)"
+                                                    class="btn btn-dribbble px-3 py-2 text-white">&nbsp;&nbsp;<i
+                                                        class='bx bx-search-alt text-white'></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <table class="table table-bordered display expandable-table">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Ảnh </th>
+                                        <th>Tên sản phẩm</th>
+                                        <th>Giá</th>
+                                        <th>Giá(đã giảm giá)</th>
+
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+
+                                    <template v-for="item in list">
+                                        <tr>
+                                            <td>{{item.productId}}</td>
+                                            <td><img :src="'/phonestore/images/'+item.image" alt="" height="150px">
+                                            </td>
+                                            <td>{{item.name}}</td>
+                                            <td>{{item.price | customCurrency}}</td>
+                                            <td>{{item.discountedPrice | customCurrency}}</td>
+
+                                            <td>
+
+                                                <div>
+                                                    <a :href="'/admin/product-version-management/list/' + item.productId"
+                                                        class="btn btn-warning px-4 py-2 text-white">
+                                                        <i class='bx bx-plus'></i>
+                                                    </a>
+
+                                                    <a :href="'/admin/product/edit/'+item.productId"
+                                                        class="btn btn-primary px-4 py-2 text-white"><i
+                                                            class='bx bxs-edit'></i></a>
+
+                                                    <a @click="deleteProduct(item.productId)"
+                                                        class="btn btn-danger px-4 py-2 text-white"><i
+                                                            class='bx bxs-trash'></i></a>
+
+                                                    <a data-toggle="collapse" :href="'#details_'+item.productId"
+                                                        role="button" aria-expanded="false" title="xem thêm"
+                                                        aria-controls="collapseExample"
+                                                        class="btn btn-success px-4 py-2 text-white"><i
+                                                            class='bx bx-dots-horizontal-rounded'></i></a>
+
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td colspan="7" class="collapse" :id="'details_'+item.productId">
+                                                <div>
+                                                    <div class="row">
+                                                        <div class="col-3">
+                                                            <div class="cell-hilighted">
+                                                                <div class="min-width-cell">
+                                                                    <p>Ngày tạo</p>
+                                                                    <h5>{{ new
+                                                                        Date(item.createDate).toLocaleDateString('en-US',
+                                                                        { month: '2-digit', day: '2-digit', year:
+                                                                        'numeric' }) }}</h5>
+                                                                </div>
+                                                                <div class="min-width-cell">
+                                                                    <p>Ngày cật nhật</p>
+                                                                    <h5>{{ item.updateDate ? new
+                                                                        Date(item.updateDate).toLocaleDateString('en-US',
+                                                                        { month: '2-digit', day: '2-digit', year:
+                                                                        'numeric' }) : 'Chưa có ngày cập nhật' }}</h5>
+
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-2">
+                                                            <div class="expanded-table-normal-cell shadow rounded-lg">
+                                                                <div class="min-width-cell">
+                                                                    <p>Thông tin pin</p>
+                                                                    <h5>{{item.batteryInfo}}</h5>
+                                                                </div>
+                                                            </div>
+                                                            <div
+                                                                class="expanded-table-normal-cell shadow rounded-lg mt-2">
+                                                                <div class="min-width-cell">
+                                                                    <p>Thông tin chip</p>
+                                                                    <h5>{{item.chipInfo}}</h5>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-2">
+                                                            <div class="expanded-table-normal-cell shadow rounded-lg">
+                                                                <div class="min-width-cell">
+                                                                    <p>Thông tin camera</p>
+                                                                    <h5>{{item.cameraInfo}}</h5>
+                                                                </div>
+                                                            </div>
+
+                                                            <div
+                                                                class="expanded-table-normal-cell shadow rounded-lg mt-2">
+                                                                <div class="min-width-cell">
+                                                                    <p>Tình trạng</p>
+
+                                                                    <h5 v-if="item.available"
+                                                                        class="badge badge-success">Đang bán</h5>
+                                                                    <h5 v-if="!item.available"
+                                                                        class="badge badge-danger px-2">Ngừng kinh doanh
+                                                                    </h5>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-4">
+                                                            <b class="">Các mã giảm giá : {{item.discounts.length}} / 2
+                                                            </b> <br>
+                                                            <div v-for="discount in item.discounts "
+                                                                class="badge badge-success p-2 mt-2 d-flex w-80"  style="width: 90%;">
+                                                                <h4 class="m-0">{{discount.name + ' - '+ discount.discountCode +' - '+ 'Giảm : ' }} {{discount.discountAmount| customCurrency}}
+                                                                    <span style="color: rgb(122, 5, 5);" v-if="!discount.voucherValid">Đã hết hạn</span>
+                                                                    <span @click="deleteDiscount(item.productId,discount.id)"><i class='bx bx-x' title="xóa"></i></span>
+                                                                   
+                                                                </h4> 
+                                                            </div>
+
+
+                                                        </div>
+
+                                                        <div class="col-1">
+                                                            <div class="d-flex justify-content-end">
+                                                                <button class="btn btn-outline-success px-3 py-2"
+                                                                    v-if="!item.available"
+                                                                    @click="sell(item.productId)">Kinh doanh</button>
+                                                                <button class="btn btn-outline-danger px-3 py-2"
+                                                                    v-if="item.available"
+                                                                    @click="sell(item.productId)">Hủy bán</button>
+                                                            </div>
+
+                                                            <div class="d-flex justify-content-end mt-2" >
+                                                                <button type="button"
+                                                                    class="btn btn-outline-primary px-3 py-2"
+                                                                    :data-target="'#discountModal'+item.productId"
+                                                                    data-toggle="modal" v-if="item.discounts.length<2">Thêm giảm giá</button>
+                                                            </div>
+
+                                                            <div class="d-flex justify-content-end mt-2" >
+                                                                <a :href="'/admin/product-attributes/list/'+item.productId"
+                                                                    class="btn btn-outline-warning px-3 py-2"
+                                                                   
+                                                                    >Thêm thuộc tính</a>
+                                                            </div>
+                                                          
+
+
+                                                            <!-- Modal -->
+                                                            <div class="modal fade" :id="'discountModal'+item.productId" tabindex="-1"
+                                                                aria-labelledby="discountModalLabel" aria-hidden="true">
+                                                                <div class="modal-dialog">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h5 class="modal-title"
+                                                                                id="discountModalLabel">Modal title</h5>
+                                                                            <button type="button" class="close"
+                                                                                data-dismiss="modal" aria-label="Close">
+                                                                                <span aria-hidden="true">&times;</span>
+                                                                            </button>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            <form action="">
+                                                                                <div class="form-group ">
+                                                                                 <label for="">Chọn mã giảm giá</label>
+                                                                                    <select
+                                                                                        class="form-select single-select"
+                                                                                        id="inputGroupSelect03"
+                                                                                        aria-label="Example select with button addon"
+                                                                                        v-model="productDiscount.discountId">
+                                                                                        <option
+                                                                                            v-for="discount in listDiscount"
+                                                                                            :value="discount.id">{{
+                                                                                            discount.discountCode +' - '+ discount.name }}</option> 
+                                                                                    </select>
+                                                                                </div>
+                                                                            </form>
+                                                                        </div>
+                                                                        <div class="modal-footer">
+
+                                                                            <button type="button"
+                                                                                class="btn btn-primary"
+                                                                                @click="saveOrUpdateDiscount(item.productId)">Lưu</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!-- end modal -->
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </template>
+
+
+                                </tbody>
+                            </table>
+                            <div class="clearfix mt-3">
+                                <div class="hint-text">Showing <b>{{list.length}}</b> out of <b>{{totalElements}}</b>
+                                    entries
+                                </div>
+                                <ul class="pagination">
+                                    <li class="page-item "><a @click="prev()" class="page-link">Previous</a></li>
+                                    <li class="page-item" v-for="pageNumber in getPaginationArray()"
+                                        :class="{ 'active': pageNumber == currentPage }">
+                                        <a class="page-link" @click="goToPage(pageNumber)">{{ pageNumber }}</a>
+                                    </li>
+
+                                    <li class="page-item"><a class="page-link" @click="next()">Next</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- content-wrapper ends -->
+                <!-- partial:partials/_footer.html -->
+                <footer class="footer">
+                    <div class="d-sm-flex justify-content-center justify-content-sm-between">
+                        <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2021.
+                            Premium <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap admin
+                                template</a> from BootstrapDash.
+                            All rights reserved.</span>
+                        <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made
+                            with <i class="ti-heart text-danger ml-1"></i></span>
+                    </div>
+                    <div class="d-sm-flex justify-content-center justify-content-sm-between">
+                        <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Distributed by <a
+                                href="https://www.themewagon.com/" target="_blank">Themewagon</a></span>
+                    </div>
+                </footer>
+                <!-- partial -->
+            </div>
+            <!-- main-panel ends -->
+        </div>
+        <!-- page-body-wrapper ends -->
+    </div>
+    <!-- container-scroller -->
+
+
+    <script>
+
+        var app = new Vue({
+            el: '#myapp',
+            data: {
+                list: [],
+                listDiscount: [],
+                productDiscount: {},
+                currentPage: null,
+                pageSize: 3,
+                keyword: '',
+                sizes: [1, 3, 6, 9, 12, 15],
+                selectedSize: null,
+                totalPages: null,
+                totalElements: null,
+            },
+            filters: {
+                customCurrency: function (input, symbol) {
+                    if (!input) return '';
+
+                    var sign = (symbol !== undefined) ? symbol : 'đ';
+
+                    input = input.toFixed(0).replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1,");
+
+                    return input + ' ' + sign;
+                }
+            },
+            methods: {
+                goToPage: function (pageNumber) {
+                    var self = this;
+                    self.currentPage = pageNumber;
+
+                    axios.get('/admin/product/getAll?page=' + self.currentPage + '&size=' + self.pageSize + '&keyword=' + self.keyword)
+                        .then(function (response) {
+                            self.list = response.data.content;
+                            self.totalPages = response.data.totalPages;
+                            self.totalElements = response.data.totalElements;
+
+
+                            var params = new URLSearchParams(window.location.search);
+                            params.set('page', self.currentPage);
+                            params.set('size', self.pageSize);
+                            params.set('keyword', self.keyword);
+                            window.history.pushState({}, '', '?' + params.toString());
+                        });
+                },
+                setSize: function (size) {
+                    var self = this;
+                    self.pageSize = size;
+                    self.currentPage = 1;
+                    self.goToPage(self.currentPage);
+                },
+                next: function () {
+                    var self = this;
+                    if (self.currentPage < self.totalPages) {
+                        self.currentPage++;
+                        self.goToPage(self.currentPage);
+                    }
+                },
+                prev: function () {
+                    var self = this;
+                    if (self.currentPage > 1) {
+                        self.currentPage--;
+                        self.goToPage(self.currentPage);
+                    }
+                },
+                getPaginationArray: function () {
+                    var self = this;
+                    var arr = [];
+                    for (var i = 1; i <= self.totalPages; i++) {
+                        arr.push(i);
+                    }
+                    return arr;
+                },
+                deleteProduct: function (id) {
+                    var self = this;
+                    Swal.fire({
+                        title: 'Xác nhận?',
+                        text: "Bạn có chắc muốn xóa sản phẩm này không!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'OK'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            axios.delete('/admin/product/delete/' + id)
+                                .then(function (response) {
+                                    if (self.currentPage == self.totalPages && self.list.length == 1) {
+                                        self.totalPages = 1
+                                    }
+                                    // Kiểm tra nếu page hiện tại lớn hơn tổng số page thì trang chuyển đến page cuối cùng
+                                    if (self.currentPage > self.totalPages) {
+                                        self.goToPage(self.totalPages)
+                                    } else {
+                                        // Nếu page hiện tại nhỏ hơn hoặc bằng tổng số page thì trang chuyển đến page hiện tại
+                                        self.goToPage(self.currentPage)
+                                    }
+
+                                    const Toast = Swal.mixin({
+                                        toast: true,
+                                        position: 'top-end',
+                                        showConfirmButton: false,
+                                        timer: 3000,
+                                        timerProgressBar: true,
+                                        didOpen: (toast) => {
+                                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                        }
+                                    });
+
+                                    Toast.fire({
+                                        icon: 'success',
+                                        title: 'Xóa thương hiệu thành công'
+                                    });
+                                })
+                                .catch(function (error) {
+                                    Swal.fire(
+                                        'Lỗi',
+                                        'Xóa thương hiệu không thành công',
+                                        'error'
+                                    );
+                                });
+                        }
+                    })
+                },
+                deleteDiscount(pid,did) {
+                    var self = this
+                    axios.delete('/admin/product-discount/deleteByProductAndDiscount/' + pid+'/'+did)
+                        .then(res => {
+                            Swal.fire(
+                                'Thông báo',
+                                'Xóa giảm giá thành công!',
+                                'success'
+                            );
+                            self.goToPage(self.currentPage);
+                        })
+                        .catch(error => {
+                            Swal.fire(
+                                'Lỗi',
+                                'Đã sảy ra lỗi vui lòng kiểm tra lại!',
+                                'error'
+                            );
+                            self.goToPage(self.currentPage);
+                        })
+                },
+                sell(id) {
+                    var self = this
+                    axios.get('/admin/product/sell/' + id)
+                        .then(function (response) {
+                            self.goToPage(self.currentPage);
+                        })
+                        .catch(function (error) {
+                            Swal.fire(
+                                'Lỗi',
+                                'Đã sảy ra lỗi vui lòng kiểm tra lại!',
+                                'error'
+                            );
+                            self.goToPage(self.currentPage);
+                        })
+                },
+                loadDiscount() {
+                    var self = this
+                    axios.get('/admin/discount/getValidDiscounts')
+                        .then(res => {
+                            self.listDiscount = res.data
+                        })
+                        .catch(error => {
+
+                        })
+
+                },
+                saveOrUpdateDiscount(id) {
+                    var self = this
+                    self.productDiscount.productId = id
+
+                    axios.post('/admin/product-discount/saveOrUpdate', self.productDiscount)
+                        .then(res => {
+
+                            Swal.fire(
+                                'Thông báo',
+                                'Thêm giảm giá cho sản phẩm thành công!',
+                                'success'
+                            );
+
+                            self.goToPage(self.currentPage)
+                        })
+                        .catch(error => {
+                            Swal.fire(
+                                'Lỗi',
+                                'Đã sảy ra lỗi vui lòng kiểm tra lại!',
+                                'error'
+                            );
+                        })
+                }
+
+            },
+            created: function () {
+
+                var self = this;
+                var urlParams = new URLSearchParams(window.location.href.split('?')[1]);
+
+                self.currentPage = urlParams.get('page') || 1;
+                self.pageSize = urlParams.get('size') || 3;
+                self.keyword = urlParams.get('keyword') || '';
+                self.selectedSize = parseInt(self.pageSize);
+
+                self.loadDiscount()
+
+                self.goToPage(self.currentPage);
+            }
+        });
+
+    </script>
+    <script src="/js/jquery.min.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script> -->
+    <script src="/vendors/js/vendor.bundle.base.js"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page -->
+    <script src="/vendors/typeahead.js/typeahead.bundle.min.js"></script>
+    <script src="/vendors/chart.js/Chart.min.js"></script>
+    <script src="/vendors/datatables.net/jquery.dataTables.js"></script>
+    <script src="/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
+    <script src="/js/dataTables.select.min.js"></script>
+
+    <!-- End plugin js for this page -->
+    <!-- inject:js -->
+    <script src="/js/off-canvas.js"></script>
+    <script src="/js/hoverable-collapse.js"></script>
+    <!-- <script src="/js/template.js"></script> -->
+    <script src="/js/settings.js"></script>
+    <!-- endinject -->
+    <!-- Custom js for this page-->
+    <script src="/js/dashboard.js"></script>
+    <script src="/js/Chart.roundedBarCharts.js"></script>
+
+    <!-- <script src="/vendors/select2/select2.min.js"></script> -->
+
+
+    <script src="/select2/js/select2.min.js"></script>
+    <!-- Custom js for this page-->
+
+    <script src="/js/typeahead.js"></script>
+    <script>
+        $('.single-select').select2({
+            theme: 'bootstrap4',
+            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+            placeholder: $(this).data('placeholder'),
+            allowClear: Boolean($(this).data('allow-clear')),
+        });
+        $('.multiple-select').select2({
+            theme: 'bootstrap4',
+            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+            placeholder: $(this).data('placeholder'),
+            allowClear: Boolean($(this).data('allow-clear')),
+        });
+    </script>
+    <!-- <script src="/js/select2.js"></script> -->
+    <!-- End custom js for this page-->
+</body>
+
+</html>

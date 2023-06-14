@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Skydash Admin</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="/vendors/feather/feather.css">
+    <link rel="stylesheet" href="/vendors/ti-icons/css/themify-icons.css">
+    <link rel="stylesheet" href="/vendors/css/vendor.bundle.base.css">
+    <!-- endinject -->
+
+    <script src="https://code.jquery.com/jquery-3.6.4.js"
+        integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
+    <!-- Plugin css for this page -->
+
+    <link rel="stylesheet" href="/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
+    <link rel="stylesheet" href="/vendors/ti-icons/css/themify-icons.css">
+    <link rel="stylesheet" type="text/css" href="/js/select.dataTables.min.css">
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="/css/vertical-layout-light/style.css">
+    <link rel="stylesheet" href="/vendors/select2/select2.min.css">
+    <link rel="stylesheet" href="/vendors/select2-bootstrap-theme/select2-bootstrap.min.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <!-- endinject -->
+
+    <!-- <link rel="stylesheet" href="/dist/jquery.toast.min.css">
+    <script src="/dist/jquery.toast.min.js"></script> -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.0/jquery.toast.min.js"
+        integrity="sha512-zv5L1hY+PMayrX2l0ojsUqem6AHpdSIVyDJBlDQH/fMLpH1JgaxPTjpum1b1AlLHdARVonrpomps+GgR0oN3MA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.0/jquery.toast.js"
+        integrity="sha512-CwEY0URPo9ZtMMCpiW/mUx4iW2AseRWTbCEJZNoVr18gbFVIGmwztqu50C0LWwUYpA7PRgBXWard2HO4uwZDfA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.0/jquery.toast.min.css"
+        integrity="sha512-wJgJNTBBkLit7ymC6vvzM1EcSWeM9mmOu+1USHaRBbHkm6W9EgM0HY27+UtUaprntaYQJF75rc8gjxllKs5OIQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="/css/vertical-layout-light/style.css">
+    <link rel="shortcut icon" href="images/favicon.png" />
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+
+
+</head>
+
+<body>
+    <div class="container-scroller">
+        <!-- partial:partials/_navbar.html -->
+        <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+            <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+
+            </div>
+            <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+                <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+                    <span class="icon-menu"></span>
+                </button>
+                <ul class="navbar-nav mr-lg-2">
+                    <li class="nav-item nav-search d-none d-lg-block">
+                        <div class="input-group">
+                            <div class="input-group-prepend hover-cursor" id="navbar-search-icon">
+                                <span class="input-group-text" id="search">
+                                    <i class="icon-search"></i>
+                                </span>
+                            </div>
+                            <input type="text" class="form-control" id="navbar-search-input" placeholder="Search now"
+                                aria-label="search" aria-describedby="search">
+                        </div>
+                    </li>
+                </ul>
+                <ul class="navbar-nav navbar-nav-right">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#"
+                            data-toggle="dropdown">
+                            <i class="icon-bell mx-0"></i>
+                            <span class="count"></span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list"
+                            aria-labelledby="notificationDropdown">
+                            <p class="mb-0 font-weight-normal float-left dropdown-header">Notifications</p>
+                            <a class="dropdown-item preview-item">
+                                <div class="preview-thumbnail">
+                                    <div class="preview-icon bg-success">
+                                        <i class="ti-info-alt mx-0"></i>
+                                    </div>
+                                </div>
+                                <div class="preview-item-content">
+                                    <h6 class="preview-subject font-weight-normal">Application Error</h6>
+                                    <p class="font-weight-light small-text mb-0 text-muted">
+                                        Just now
+                                    </p>
+                                </div>
+                            </a>
+                            <a class="dropdown-item preview-item">
+                                <div class="preview-thumbnail">
+                                    <div class="preview-icon bg-warning">
+                                        <i class="ti-settings mx-0"></i>
+                                    </div>
+                                </div>
+                                <div class="preview-item-content">
+                                    <h6 class="preview-subject font-weight-normal">Settings</h6>
+                                    <p class="font-weight-light small-text mb-0 text-muted">
+                                        Private message
+                                    </p>
+                                </div>
+                            </a>
+                            <a class="dropdown-item preview-item">
+                                <div class="preview-thumbnail">
+                                    <div class="preview-icon bg-info">
+                                        <i class="ti-user mx-0"></i>
+                                    </div>
+                                </div>
+                                <div class="preview-item-content">
+                                    <h6 class="preview-subject font-weight-normal">New user registration</h6>
+                                    <p class="font-weight-light small-text mb-0 text-muted">
+                                        2 days ago
+                                    </p>
+                                </div>
+                            </a>
+                        </div>
+                    </li>
+                    <li class="nav-item nav-profile dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
+                            <img src="images/faces/face28.jpg" alt="profile" />
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right navbar-dropdown"
+                            aria-labelledby="profileDropdown">
+                            <a class="dropdown-item">
+                                <i class="ti-settings text-primary"></i>
+                                Settings
+                            </a>
+                            <a class="dropdown-item">
+                                <i class="ti-power-off text-primary"></i>
+                                Logout
+                            </a>
+                        </div>
+                    </li>
+
+                </ul>
+                <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
+                    data-toggle="offcanvas">
+                    <span class="icon-menu"></span>
+                </button>
+            </div>
+        </nav>
+        <!-- partial -->
+        <div class="container-fluid page-body-wrapper">
+            <!-- partial:partials/_settings-panel.html -->
+            <div class="theme-setting-wrapper">
+                <div id="settings-trigger"><i class="ti-settings"></i></div>
+                <div id="theme-settings" class="settings-panel">
+                    <i class="settings-close ti-close"></i>
+                    <p class="settings-heading">SIDEBAR SKINS</p>
+                    <div class="sidebar-bg-options selected" id="sidebar-light-theme">
+                        <div class="img-ss rounded-circle bg-light border mr-3"></div>Light
+                    </div>
+                    <div class="sidebar-bg-options" id="sidebar-dark-theme">
+                        <div class="img-ss rounded-circle bg-dark border mr-3"></div>Dark
+                    </div>
+                    <p class="settings-heading mt-2">HEADER SKINS</p>
+                    <div class="color-tiles mx-0 px-4">
+                        <div class="tiles success"></div>
+                        <div class="tiles warning"></div>
+                        <div class="tiles danger"></div>
+                        <div class="tiles info"></div>
+                        <div class="tiles dark"></div>
+                        <div class="tiles default"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- partial -->
+            <!-- partial:partials/_sidebar.html -->
+            <th:block th:replace="admin/menu :: menu"></th:block>
+            <!-- partial -->
+            <div class="main-panel">
+                <div class="content-wrapper">
+
+
+
+                    <div class="row ">
+                        <div class="col-md-12 grid-margin stretch-card">
+                            <div class="card">
+                                <div class="card-body shadow-lg">
+                                    <h2 class="ml-3">Quản lí sản phẩm </h2>
+                                    <div class="row">
+
+                                        <div class="modal-body">
+                                            <form class="forms-sample" id="myForm" th:object="${productDto}">
+                                                <div class="row w-100">
+                                                    <div class="col-8 ">
+
+                                                        <input type="text" th:field="*{productId}" id="productId"
+                                                            hidden>
+                                                        <div class=" w-100 row">
+                                                            <div class="form-group col-6">
+                                                                <label for="exampleInputName1">Name</label>
+                                                                <input type="text" class="form-control"
+                                                                    id="product-name" placeholder="Tên sản phẩm"
+                                                                    th:field="*{name}">
+                                                            </div>
+
+                                                            <div class="form-group col-6">
+                                                                <label for="exampleInputName1">Giá</label>
+                                                                <input type="text" class="form-control"
+                                                                    id="product-price" placeholder="Giá sản phẩm"
+                                                                    th:field="*{price}">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row w-100">
+
+                                                            <div class="form-group col-6">
+                                                                <label for="exampleInputName1">Mã định danh sản phẩm(Duy
+                                                                    nhất)</label>
+                                                                <input type="text" class="form-control" id="productCode"
+                                                                    placeholder="mã định danh sản phẩm"
+                                                                    th:field="*{productCode}">
+                                                            </div>
+                                                            <div class="form-group col-lg-6">
+                                                                <label>File upload</label>
+                                                                <input type="file" name="img"
+                                                                    class="file-upload-default" id="product-image">
+                                                                <div class="input-group col-xs-12">
+                                                                    <input type="text"
+                                                                        class="form-control file-upload-info" disabled
+                                                                        placeholder="Upload Image" id="upload-image"
+                                                                        th:field="*{image}">
+                                                                    <span class="input-group-append">
+                                                                        <button
+                                                                            class="file-upload-browse btn btn-danger"
+                                                                            type="button"><i
+                                                                                class="ti-upload btn-icon-prepend"></i>&nbsp;
+                                                                            Upload</button>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+
+                                                    </div>
+
+                                                    <div class="col-4">
+                                                        <div class="d-flex justify-content-center py-2 "
+                                                            style="border: #4849AC solid 2px;border-radius: 20px;">
+
+                                                            <img th:if="${productDto.image == null}"
+                                                                src="default-image.jpg" height="200px"
+                                                                class="preview-image">
+                                                            <img th:if="${productDto.image != null}"
+                                                                th:src="'/phonestore/images/'+${productDto.image}"
+                                                                alt="" height="200px" class="preview-image">
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row w-100">
+                                                    <div class="col-6 w-100">
+                                                        <div class="w-100">
+                                                            <label>Thương hiệu: </label>
+                                                            <select class="js-example-basic-single " id="product-brand"
+                                                                style="width: 100%;" th:field="*{brandId}">
+                                                                <option value="0">Vui lòng chọn thương hiệu</option>
+                                                                <option th:each="item : ${listBrand}"
+                                                                    th:text="${item.brandName}"
+                                                                    th:value="${item.brandId}">
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-6 w-100">
+                                                        <div class="w-100">
+                                                            <label>Series</label>
+                                                            <select class="js-example-basic-single" style="width: 100%;"
+                                                                id="product-series">
+                                                                <option value="0">Vui lòng chọn thương hiệu</option>
+
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="row mt-2">
+                                                    <div class="col-12">
+                                                        <label>DS Ảnh</label>
+                                                        <input type="file" name="img" class="form-control"
+                                                            id="listImage" multiple>
+                                                        <p id="numFilesSelected">Chưa chọn tệp nào.</p>
+                                                    </div>
+                                                </div>
+
+                                                <div id="attributeInputs" class="row">
+                                                    <!-- Các ô input thuộc tính sẽ được đổ vào đây -->
+                                                </div>
+
+                                                <div class="row mt-2">
+                                                    <div class="col-lg-12 h-100 w-100">
+                                                        <label>Mô tả</label>
+                                                        <!-- <textarea name="" cols="30" rows="5" class="form-control"
+                                                            id="product-description"
+                                                            th:field="*{description}"></textarea> -->
+                                                        <div id="editor" style="height: 100px;">
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+
+
+
+
+                                                <div class="mt-3">
+                                                    <button type="button" onclick="add()" th:if="${productDto.edit}"
+                                                        class="btn btn-success mr-2 px-3 py-2"><i
+                                                            class='bx bx-plus'></i>
+                                                        Thêm</button>
+                                                    <button type="button" onclick="add()" th:if="${!productDto.edit}"
+                                                        class="btn btn-warning mr-2 px-3 py-2 text-white"><i
+                                                            class='bx bxs-pencil'></i>Cập nhật</button>
+                                                    <a type="button" href="/admin/product/list"
+                                                        class="btn btn-danger mr-2 px-3 py-2 text-center"><i
+                                                            class='bx bx-list-ul'></i> Danh sách</a>
+
+                                                    <button type="button" onclick="clear()"
+                                                        class="btn btn-primary mr-2 px-3 py-2"><i
+                                                            class='bx bx-refresh'></i> Mới</button>
+
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+                <!-- content-wrapper ends -->
+                <!-- partial:partials/_footer.html -->
+                <footer class="footer">
+                    <div class="d-sm-flex justify-content-center justify-content-sm-between">
+                        <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2021.
+                            Premium <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap admin
+                                template</a> from BootstrapDash.
+                            All rights reserved.</span>
+                        <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made
+                            with <i class="ti-heart text-danger ml-1"></i></span>
+                    </div>
+                    <div class="d-sm-flex justify-content-center justify-content-sm-between">
+                        <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Distributed by <a
+                                href="https://www.themewagon.com/" target="_blank">Themewagon</a></span>
+                    </div>
+                </footer>
+                <!-- partial -->
+            </div>
+            <!-- main-panel ends -->
+        </div>
+        <!-- page-body-wrapper ends -->
+    </div>
+    <!-- container-scroller -->
+
+
+    <!-- plugins:js -->
+    <script src="/vendors/js/vendor.bundle.base.js"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page -->
+    <script src="/vendors/typeahead.js/typeahead.bundle.min.js"></script>
+    <script src="/vendors/chart.js/Chart.min.js"></script>
+    <script src="/vendors/datatables.net/jquery.dataTables.js"></script>
+    <script src="/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
+    <script src="/js/dataTables.select.min.js"></script>
+
+    <!-- End plugin js for this page -->
+    <!-- inject:js -->
+    <script src="/js/off-canvas.js"></script>
+    <script src="/js/hoverable-collapse.js"></script>
+    <script src="/js/template.js"></script>
+    <script src="/js/settings.js"></script>
+    <script src="/js/todolist.js"></script>
+    <!-- endinject -->
+    <!-- Custom js for this page-->
+    <script src="/js/dashboard.js"></script>
+    <script src="/js/Chart.roundedBarCharts.js"></script>
+
+    <script src="/vendors/select2/select2.min.js"></script>
+
+
+
+    <!-- Custom js for this page-->
+
+    <script src="/js/typeahead.js"></script>
+    <script src="/js/select2.js"></script>
+    <!-- End custom js for this page-->
+    <script>
+        var quill = new Quill('#editor', {
+            theme: 'snow',
+            clipboard: {
+                matchVisual: false
+            }
+        });
+
+        quill.on('text-change', function (delta, oldDelta, source) {
+            if (source === 'user') {
+                var plainText = quill.getText();
+                quill.clipboard.dangerouslyPasteHTML(plainText);
+            }
+        });
+
+    </script>
+
+    <script>
+
+
+
+
+        $(document).ready(function () {
+
+
+
+            document.getElementById("product-name").onchange = function () {
+                var productName = document.getElementById("product-name").value;
+                var productCode = convertToSlug(productName);
+                document.getElementById("productCode").value = productCode;
+            };
+
+            function convertToSlug(text) {
+                return text.toLowerCase().replace(/[^\w\s-]/g, '').replace(/[\s_-]+/g, '-');
+            }
+
+            var description = `[[${productDto.description}]]`;
+            quill.clipboard.dangerouslyPasteHTML(description);
+            console.log(description)
+
+
+            $('#product-brand').select2();
+            $('#product-series').select2();
+            $('#product-category').select2();
+
+            // var brandId = [[${ productDto.brandId }]];
+            // $('#product-brand').val(brandId).triggerHandler('change');
+
+            var selectedSeriesId = '[[${productDto.productSeriesId}]]'
+            // Đặt giá trị cho select thứ hai
+            const onChangeSelect = function () {
+
+
+                let brandId;
+
+                brandId = $('#product-brand').val()
+
+                console.log("ddd")
+                console.log(brandId);
+                $.ajax({
+                    url: '/admin/product-series-management/findByBrand/' + brandId,
+                    method: 'GET',
+                    success: function (response) {
+                        console.log(response)
+                        var seriesSelect = $('#product-series');
+                        seriesSelect.empty();
+                        if (response.length === 0) {
+                            var option = $('<option>').attr('value', 0).text('Thương hiệu này chưa có series');
+                            seriesSelect.append(option);
+                        }
+                        $.each(response, function (index, series) {
+                            var option = $('<option>').attr('value', series.productSeriesId).text(series.name);
+
+                            if (series.productSeriesId == selectedSeriesId) {
+                                option.prop('selected', true);
+                            }
+
+                            seriesSelect.append(option);
+                        });
+                        // Nếu bạn đang sử dụng Select2, bạn có thể gọi hàm refresh() để cập nhật lại UI
+                        seriesSelect.trigger('change');
+                    }
+                });
+
+
+                if (brandId == 0) {
+                    var attributeInputs = document.getElementById('attributeInputs');
+                    attributeInputs.innerHTML = '';
+
+                }
+
+                var productId = '[[${productDto.productId}]]';
+
+                var url = ''
+
+                if (productId) {
+                    url = '/admin/product/getAttributesByBrand/' + brandId + '/' + productId;
+                } else {
+                    url = '/admin/product/getAttributesByBrand/' + brandId
+                }
+
+                console.log(url);
+                $.ajax({
+                    url: url,
+                    method: 'GET',
+                    success: function (response) {
+                        var attributeInputs = document.getElementById('attributeInputs');
+                        attributeInputs.innerHTML = '';
+
+                        console.log(response)
+
+                        var colClass = 'col-lg-' + Math.floor(12 / 3); // Chia 3 cột trong Bootstrap
+
+                        response.forEach(function (attribute) {
+                            var input = document.createElement('input');
+                            var label = document.createElement('label');
+                            label.textContent = attribute.name
+
+
+                            input.type = 'text';
+                            input.value = '';
+                            input.dataset.attributesId = attribute.id;
+                            input.placeholder = attribute.name;
+                            input.className = "form-control"
+
+                            console.log(attribute.productAttributesValue)
+                            if (attribute.productAttributesValue) {
+                                input.value = attribute.productAttributesValue
+                            }
+
+
+                            var col = document.createElement('div');
+                            col.className = colClass + " mt-2 mb-2"
+                            col.appendChild(label)
+                            col.appendChild(input);
+
+                            attributeInputs.appendChild(col);
+                        });
+                    }
+                });
+
+                productId = ''
+
+            };
+
+            $('#product-brand').on('change', onChangeSelect);
+            onChangeSelect();
+
+
+            $('#product-image').on('change', function (e) {
+                var fileName = e.target.files[0].name;
+                $('#upload-image').val(fileName);
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('.preview-image').attr('src', e.target.result);
+                };
+                reader.readAsDataURL(e.target.files[0]);
+            });
+        });
+
+
+
+        function add() {
+            var content = quill.root.innerHTML;
+            var plainText = content.replace(/<[^>]+>/g, '');
+            var formData = new FormData();
+            formData.append("productId", $('#productId').val())
+            formData.append("name", $('#product-name').val())
+            formData.append("price", $('#product-price').val())
+            formData.append("productCode", $('#productCode').val())
+            formData.append('productSeriesId', $('#product-series').val())
+            // formData.append("categoryId",$("#product-category").val())
+            formData.append('description', plainText)
+
+
+            var fileInput = $('#product-image')[0];
+
+            var listFiles = $('#listImage')[0].files;
+
+            if (listFiles.length > 0) {
+                for (var i = 0; i < listFiles.length; i++) {
+                    formData.append('listImages[]', listFiles[i]);
+                }
+            }
+
+            if (fileInput.files.length > 0) {
+                formData.append('fileImage', fileInput.files[0]);
+                // Gửi formData tới server
+            }
+
+            var attributeInputs = document.querySelectorAll('#attributeInputs input');
+            var data = [];
+
+            attributeInputs.forEach(function (input, index) {
+                var attributeId = input.dataset.attributesId;
+                var attributeValue = input.value;
+
+                formData.append('listAttributes[' + index + '].id', attributeId);
+                formData.append('listAttributes[' + index + '].name', attributeValue);
+                
+            });
+
+         
+
+
+            $.ajax({
+                url: '/admin/product/insert',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    var message = $('#productId').val() ? 'Cật nhập sản phẩm thành công!' : 'Thêm sản phẩm thành công'
+
+                    Swal.fire(
+                        'Thông báo',
+                        message,
+                        'success'
+                    );
+
+                    // $.toast({
+                    //     heading: 'Thông báo',
+                    //     text: message,
+                    //     position: 'top-right',
+                    //     icon: 'success'
+                    // }).then(res=>{
+                    //     window.location.href= '/admin/product/add'
+                    // })
+
+                    clear()
+
+                },
+                error: function (xhr, status, error) {
+
+                    if (status === 409) {
+                        Swal.fire(
+                            'Lỗi',
+                            error.message,
+                            'error');
+                    } else {
+                        Swal.fire(
+                            'Lỗi',
+                            'Thêm sản phẩm không thành công',
+                            'error'
+                        );
+                    }
+                }
+            });
+        }
+
+        function clear() {
+            $("#myForm :input").val('');
+            $("#myFrom :file").val('')
+            $('.preview-image').attr('src', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0oOkcCVPOM7rEMITh-VGz8umpnmu0rsLjfw&usqp=CAU');
+            $('.file-upload-info').val('')
+            // Đặt giá trị ban đầu cho select2 thương hiệu
+            $('#product-brand').val('0').trigger('change.select2');
+
+            // Xóa tất cả các option của select2 series
+            $('#product-series').empty();
+
+            // Thêm option mặc định cho select2 series
+            var option = $('<option>').attr('value', 0).text('Vui lòng chọn thương hiệu');
+            $('#product-series').append(option);
+
+            // Đặt giá trị ban đầu cho select2 giảm giá
+            $('#product-discount').val('0').trigger('change.select2');
+
+            quill.root.innerHTML = ''
+
+        }
+
+
+        const inputElement = document.querySelector('input[type="file"]');
+
+        document.querySelector('.file-upload-browse').addEventListener('click', (event) => {
+
+            event.preventDefault();
+
+            inputElement.click();
+        });
+
+
+        inputElement.addEventListener('change', (event) => {
+
+            const selectedFiles = inputElement.files;
+            const fileName = selectedFiles[0].name;
+            // Hiển thị tên tệp lên thẻ HTML
+            const fileNameElement = document.querySelector('.file-upload-info');
+            fileNameElement.value = fileName;
+            fileNameElement.disabled = true;
+        });
+    </script>
+</body>
+
+</html>

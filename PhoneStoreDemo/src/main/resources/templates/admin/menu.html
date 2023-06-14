@@ -1,0 +1,128 @@
+
+<nav class="sidebar" id="sidebar" th:fragment="menu">
+    <ul class="nav ">
+        <li class="nav-item">
+            <a class="nav-link" href="/admin/home">
+                <i class="icon-grid menu-icon"></i>
+                <span class="menu-title">Trang chủ</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false"
+                aria-controls="">
+                <i class="icon-layout menu-icon"></i>
+                <span class="menu-title">Sản phẩm</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="ui-basic">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"> <a class="nav-link" href="/admin/product/list">Sản phẩm</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="/admin/product/add">Thêm sản phẩm</a></li>
+                </ul>
+            </div>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#form-elements" aria-expanded="false"
+                aria-controls="form-elements">
+                <i class="icon-columns menu-icon"></i>
+                <span class="menu-title">Đơn hàng</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="form-elements">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"><a class="nav-link" href="/admin/order/list">Danh sách dơn</a></li>
+                </ul>
+            </div>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#charts" aria-expanded="false"
+                aria-controls="charts">
+                <i class="icon-bar-graph menu-icon"></i>
+                <span class="menu-title">Doanh mục</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="charts">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"> <a class="nav-link" href="/admin/category/list">Thêm doanh
+                            mục</a></li>
+                </ul>
+            </div>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#tables" aria-expanded="false"
+                aria-controls="tables">
+                <i class="icon-grid-2 menu-icon"></i>
+                <span class="menu-title">Quản lí tài khoản</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="tables">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"> <a class="nav-link" href="/admin/user/list">Thêm tài
+                            khoản</a></li>
+                </ul>
+            </div>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#icons" aria-expanded="false"
+                aria-controls="icons">
+                <i class="icon-contract menu-icon"></i>
+                <span class="menu-title">Thuộc tính</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="icons">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"> <a class="nav-link" href="/admin/attributes/list">Ds thuộc tính</a></li>
+                </ul>
+            </div>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#color" aria-expanded="false"
+                aria-controls="color">
+                <i class="icon-paper menu-icon"></i>
+                <span class="menu-title">Màu Sắc</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="color">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"> <a class="nav-link" href="/admin/color/list"> Danh sách màu </a>
+                    </li>
+                   
+                </ul>
+            </div>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#discount" aria-expanded="false"
+                aria-controls="discount">
+                <i class="icon-paper menu-icon"></i>
+                <span class="menu-title">Giảm giá sản phẩm</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="discount">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"> <a class="nav-link" href="/admin/discount/list"> Ds giảm giá </a>
+                    </li>
+                   
+                </ul>
+            </div>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#voucher" aria-expanded="false"
+                aria-controls="voucher">
+                <i class="icon-paper menu-icon"></i>
+                <span class="menu-title">Mã giảm giá</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="voucher">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"> <a class="nav-link" href="/admin/voucher/list"> Ds mã giảm giá </a>
+                    </li>
+                   
+                </ul>
+            </div>
+        </li>
+     
+
+    </ul>
+</nav>
+

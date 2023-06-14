@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<!-- molla/product-extended.html  22 Nov 2019 10:03:20 GMT -->
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Molla - Bootstrap eCommerce Template</title>
+    <meta name="keywords" content="HTML5 Template">
+    <meta name="description" content="Molla - Bootstrap eCommerce Template">
+    <meta name="author" content="p-themes">
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/site/assets/images/icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/site/assets/images/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/site/assets/images/icons/favicon-16x16.png">
+    <link rel="manifest" href="/site/assets/images/icons/site.html">
+    <link rel="mask-icon" href="/site/assets/images/icons/safari-pinned-tab.svg" color="#666666">
+    <link rel="shortcut icon" href="/site/assets/images/icons/favicon.ico">
+    <meta name="apple-mobile-web-app-title" content="Molla">
+    <meta name="application-name" content="Molla">
+    <meta name="msapplication-TileColor" content="#cc9966">
+    <meta name="msapplication-config" content="/site/assets/images/icons/browserconfig.xml">
+    <meta name="theme-color" content="#ffffff">
+    <!-- Plugins CSS File -->
+    <link rel="stylesheet" href="/site/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/site/assets/css/plugins/owl-carousel/owl.carousel.css">
+    <link rel="stylesheet" href="/site/assets/css/plugins/magnific-popup/magnific-popup.css">
+    <!-- Main CSS File -->
+    <link rel="stylesheet" href="/site/assets/css/style.css">
+    <link rel="stylesheet" href="/site/assets/css/plugins/nouislider/nouislider.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.1/jquery.toast.min.css"
+        integrity="sha512-wJgJNTBBkLit7ymC6vvzM1EcSWeM9mmOu+1USHaRBbHkm6W9EgM0HY27+UtUaprntaYQJF75rc8gjxllKs5OIQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        .product-selected {
+            border: #e83a45 1px solid;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page-wrapper" id="myapp">
+        <th:block th:replace="site/menu :: menu"></th:block>
+
+        <main class="main">
+            <nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
+                <div class="container d-flex align-items-center">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                        <li class="breadcrumb-item"><a href="#">Products</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Extended Description</li>
+                    </ol>
+
+                    <nav class="product-pager ml-auto" aria-label="Product">
+                        <a class="product-pager-link product-pager-prev" href="#" aria-label="Previous" tabindex="-1">
+                            <i class="icon-angle-left"></i>
+                            <span>Prev</span>
+                        </a>
+
+                        <a class="product-pager-link product-pager-next" href="#" aria-label="Next" tabindex="-1">
+                            <span>Next</span>
+                            <i class="icon-angle-right"></i>
+                        </a>
+                    </nav><!-- End .pager-nav -->
+                </div><!-- End .container -->
+            </nav><!-- End .breadcrumb-nav -->
+
+            <div class="page-content">
+                <div class="container">
+                    <div class="product-details-top mb-2">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <div class="product-gallery">
+                                    <figure class="product-main-image text-center">
+                                        <img id="" :src="'/phonestore/images/'+product.image" alt="product image"
+                                            height="200px" class="ml-4">
+
+                                        <a href="#" id="btn-product-gallery" class="btn-product-gallery">
+                                            <i class="icon-arrows"></i>
+                                        </a>
+                                    </figure><!-- End .product-main-image -->
+
+                                    <div id="product-zoom-gallery" class="product-image-gallery">
+                                        <a class="product-gallery-item" href="#" v-for="image in product.productImages">
+                                            <img id="" :src="'/phonestore/images/'+image.imageUrl" alt="product image"
+                                                height="400px">
+                                        </a>
+
+
+                                    </div>
+                                    <!-- End .product-image-gallery -->
+                                </div><!-- End .product-gallery -->
+                            </div><!-- End .col-md-6 -->
+
+                            <div class="col-md-7">
+                                <div class="product-details">
+                                    <h1 class="product-title">{{product.name}}</h1>
+
+
+                                </div><!-- End .rating-container -->
+
+
+                                <template v-if="product.available">
+                                    <del class="product-price" id="product-price"
+                                        style="font-size: small;">{{product.price | customCurrency }}</del>
+                                    <div class="product-price" id="discountedPrice" style="color: #e83a45;">
+                                        {{product.discountedPrice |customCurrency }}
+                                    </div>
+                                </template>
+
+                                <div v-if="!product.available">
+                                    <h5 style="color: #e83a45;">Ngừng kinh doanh</h5>
+                                </div>
+
+                                <div v-if="statuStock">
+                                    <h6>Tình trạng : {{statuStock}}</h6>
+                                </div>
+
+                                <div class="product-content">
+                                    <p>{{product.description}} </p>
+                                </div><!-- End .product-content -->
+
+                                <div class="my-2" v-if="version.versionName">
+                                    <b> Phiên bản đang chọn : {{version.versionName}}
+                                        <span v-if="colorName">- Màu : {{colorName}} </span> </b>
+                                </div>
+
+                                <div class="details-filter-row details-row-size">
+                                    <div for="size">Các phiên bản:</div> <br>
+                                    <div>
+                                        <a v-for="version in listVersion" @click="getColor(version.productVersionId)"
+                                            class="btn btn-outline-dark m-2 p-0 btn-round">
+                                            <div class="d-flex flex-column">
+                                                <div>
+                                                    <small style="font-weight: bold;"> {{ version.versionName
+                                                        }}</small>
+                                                </div>
+                                                <div>
+                                                    <small style="color: gray;">{{version.discountedPrice
+                                                        |customCurrency}}</small>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div><!-- End .details-filter-row -->
+
+                                <div class="details-filter-row details-row-size">
+                                    <label>Color:</label>
+
+                                    <div v-if="listProductDetails && listProductDetails.length">
+                                        <a v-for="productDetail in listProductDetails"
+                                            :class="['btn', 'btn-outline-dark', 'mr-2','btn-round','p-1', {'product-selected': productDetail.productDetailsId === productDetails.productDetailsId }]"
+                                            @click="selectProductDetails(productDetail.productDetailsId)">
+                                            <div class="d-flex align-items-center">
+                                                <div>
+                                                    <img :src="'/phonestore/images/'+productDetail.image" alt=""
+                                                        height="32px" width="32px" class="mr-2">
+                                                </div>
+                                                <div class="d-flex flex-column">
+                                                    <div>
+                                                        <span
+                                                            style="font-weight: bold;">{{productDetail.color.name}}</span>
+                                                    </div>
+                                                    <div>
+                                                        <small style="color: gray;">{{productDetail.discountedPrice
+                                                            |customCurrency}}</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+
+
+
+
+                                    </div>
+                                    <div v-else>
+                                        <b>Vui lòng chọn phiên bản!</b>
+                                    </div>
+
+                                    <!-- End .product-nav -->
+                                </div><!-- End .details-filter-row -->
+
+                                <div class="details-filter-row details-row-size">
+                                    <label for="qty">Qty:</label>
+                                    <div class="product-details-quantity">
+                                        <input type="number" id="qty" class="form-control" value="1" min="1" max="10"
+                                            step="1" data-decimals="0" required v-model="cart.quantity">
+                                    </div><!-- End .product-details-quantity -->
+                                </div><!-- End .details-filter-row -->
+
+                                <div class="product-details-action">
+                                    <a @click="addCart()" class="btn-product btn-cart"><span>Thêm vào giỏ
+                                            hàng</span></a>
+
+                                    <div class="details-action-wrapper">
+                                        <a @click="addToWishlist()" class="btn-product btn-wishlist"
+                                            title="Wishlist"><span>Yêu thích</span></a>
+
+                                    </div><!-- End .details-action-wrapper -->
+                                </div><!-- End .product-details-action -->
+
+
+                            </div><!-- End .product-details -->
+                        </div><!-- End .col-md-6 -->
+                    </div><!-- End .row -->
+                </div><!-- End .product-details-top -->
+            </div><!-- End .container -->
+
+            <div class="product-details-tab product-details-extended">
+                <div class="container">
+                    <ul class="nav nav-pills justify-content-center" role="tablist">
+
+                        <li class="nav-item">
+                            <a class="nav-link active" id="product-info-link" data-toggle="tab" href="#product-info-tab"
+                                role="tab" aria-controls="product-info-tab" aria-selected="false">Thông tin sản phẩm
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="product-shipping-link" data-toggle="tab"
+                                href="#product-shipping-tab" role="tab" aria-controls="product-shipping-tab"
+                                aria-selected="false">Chính sách đổi trả hàng</a>
+                        </li>
+                        <!-- <li class="nav-item">
+                            <a class="nav-link" id="product-review-link" data-toggle="tab" href="#product-review-tab"
+                                role="tab" aria-controls="product-review-tab" aria-selected="false">Reviews (2)</a>
+                        </li> -->
+                    </ul>
+                </div><!-- End .container -->
+
+                <div class="tab-content">
+
+                    <div class="tab-pane fade show active " id="product-info-tab" role="tabpanel"
+                        aria-labelledby="product-info-link">
+                        <div class="product-desc-content">
+                            <div class="container">
+                                <h3>Thông tin</h3>
+                                <p>{{product.description}} </p>
+
+                                <h3>Thông tin cấu hình</h3>
+                               <div class="row">
+                                <div class="col-lg-6">
+                                    <table class="table table-bordered">
+                                        <thead class="text-center">
+                                            <tr class="">
+                                                <th class="font-weight-bold">Tên thuộc tính</th>
+                                                <th class="font-weight-bold">Giá trị</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr v-for="productAttributes in product.productAttributes" class="text-center">
+                                                <td>{{productAttributes.attributes.name}}</td>
+                                                <td>{{productAttributes.value}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="">
+                                        <img id="" :src="'/phonestore/images/'+product.image" alt="product image"
+                                                height="550px" width="550px" class="ml-4">
+                                    </div>
+                                </div>
+                               </div>
+                                </p>
+                            </div><!-- End .container -->
+                        </div><!-- End .product-desc-content -->
+                    </div><!-- .End .tab-pane -->
+                    <div class="tab-pane fade" id="product-shipping-tab" role="tabpanel"
+                        aria-labelledby="product-shipping-link">
+                        <div class="product-desc-content">
+                            <div class="container">
+                                <h4>Chính sách đổi trả hàng</h4>
+                                <p>
+                                    Chính sách đổi trả hàng trong vòng 7 ngày là một chính sách mà khách hàng có
+                                    thể yêu cầu đổi trả hàng hóa trong vòng 7 ngày kể từ khi mua sản phẩm từ
+                                    trang web bán điện thoại. Đây là một chính sách hợp lý và cần thiết để giúp
+                                    khách hàng có thể kiểm tra và đánh giá sản phẩm một cách chính xác trước khi
+                                    quyết định giữ lại sản phẩm hay trả lại.</p>
+                                <h4>Cụ thể, chính sách này sẽ có các quy định sau:</h4>
+                                <ul>
+                                    <li>
+                                        1. Thời gian đổi trả hàng: Khách hàng có thể đổi trả hàng hóa trong vòng 7
+                                        ngày kể từ khi nhận được sản phẩm.
+                                    </li>
+                                    <li>
+                                        2. Điều kiện đổi trả hàng: Sản phẩm phải còn nguyên vẹn, không bị hỏng hóc,
+                                        sử dụng, hay bị trầy xước, vỡ vụn, đảm bảo còn đầy đủ các phụ kiện đi kèm,
+                                        bao gồm sách hướng dẫn, cáp sạc, tai nghe, hộp đựng và phiếu bảo hành.
+                                    </li>
+                                    <li>
+                                        3. Quy trình đổi trả hàng: Khách hàng cần thông báo cho trang web bán hàng
+                                        về việc đổi trả sản phẩm trong vòng 7 ngày kể từ khi nhận được sản phẩm và
+                                        trình bày lý do. Sau đó, nhân viên hỗ trợ của trang web bán hàng sẽ hướng
+                                        dẫn khách hàng về quy trình và cách thức đổi trả sản phẩm.
+                                    </li>
+                                    <li>
+                                        4. Chi phí đổi trả hàng: Nếu sản phẩm không có lỗi do nhà sản xuất hoặc lỗi
+                                        do vận chuyển, chi phí đổi trả hàng sẽ do khách hàng chịu. Nếu sản phẩm bị
+                                        lỗi do nhà sản xuất hoặc lỗi do vận chuyển, trang web bán hàng sẽ chịu trách
+                                        nhiệm và hoàn trả chi phí đổi trả hàng cho khách hàng.
+                                    </li>
+
+                                    <li>
+                                        5. Thời gian xử lý đổi trả hàng: Sau khi nhận được thông tin đổi trả sản
+                                        phẩm và kiểm tra sản phẩm, trang web bán hàng sẽ xử lý yêu cầu đổi trả sản
+                                        phẩm trong vòng 3 ngày làm việc
+                                    </li>
+                                </ul>
+                            </div><!-- End .container -->
+                        </div><!-- End .product-desc-content -->
+                    </div><!-- .End .tab-pane -->
+                    
+                    
+
+               
+                </div><!-- End .tab-content -->
+            </div><!-- End .product-details-tab -->
+
+            <div class="container">
+                <div class="heading heading-flex mb-2">
+                    <div class="heading-left">
+                        <h2 class="title mb-5">Sản phẩm tương tự</h2><!-- End .title -->
+                    </div><!-- End .heading-left -->
+
+                    <div class="heading-right">
+                        <a href="/dtdd" class="title-link">Xem thêm sản phẩm <i class="icon-long-arrow-right"></i></a>
+                    </div>
+                    <!-- End .heading-right -->
+                </div>
+                <!-- End .heading -->
+
+                <div class="owl-carousel owl-simple carousel-equal-height carousel-with-shadow" data-toggle="owl"
+                    data-owl-options='{
+                    "nav": false, 
+                    "dots": true,
+                    "margin": 20,
+                    "loop": false,
+                    "responsive": {
+                        "0": {
+                            "items":2
+                        },
+                        "480": {
+                            "items":2
+                        },
+                        "768": {
+                            "items":3
+                        },
+                        "992": {
+                            "items":4
+                        },
+                        "1200": {
+                            "items":5,
+                            "nav": true
+                        }
+                    }
+                }'>
+                    <div class="product" th:each="product : ${listRand}">
+                        <figure class="product-media">
+                            <span class="product-label label-new">New</span>
+                            <a th:href="@{'/dtdd/'+${product.productCode}}">
+                                <img th:src="@{'/phonestore/images/'+${product.image}}" alt="Product image"
+                                    class="product-image">
+                            </a>
+
+                            <div class="product-action-vertical">
+                                <a href="#" class="btn-product-icon btn-wishlist" title="Add to Wishlist"><span>Yêu
+                                        thích</span></a>
+
+
+                            </div><!-- End .product-action-vertical -->
+
+                            <div class="product-action">
+                                <a th:href="@{'/vandustore/'+${product.categoryCode}+'/'+${product.productCode}}" class="btn-product"><span>Xem chi
+                                        tiết</span></a>
+                            </div><!-- End .product-action -->
+                        </figure><!-- End .product-media -->
+
+                        <div class="product-body">
+                            <h3 class="product-title"><a th:href="@{'/vandustore/'+${product.categoryCode}+'/'+${product.productCode}}"
+                                    th:text="${product.name}"></a></h3>
+                            <!-- End .product-title -->
+                            <del class="product-price"
+                                th:text="${#numbers.formatDecimal(product.price, 3,  'POINT', 0 , 'COMMA')} + ' VNĐ'"
+                                style="font-size: small;">
+                            </del>
+                            <div class="product-price" id="" style="color: #e83a45;font-size: 20px;"
+                                th:text="${#numbers.formatDecimal(product.discountedPrice, 3,  'POINT', 0 , 'COMMA')} + ' VNĐ'">
+
+                            </div>
+                            <!-- End .product-price -->
+                        </div><!-- End .product-body -->
+                    </div><!-- End .product -->
+
+
+                </div><!-- End .owl-carousel -->
+
+                <div class="mb-5"></div><!-- End .mb-4 -->
+            </div><!-- End .container -->
+
+    </div><!-- End .page-content -->
+    </main><!-- End .main -->
+
+    <footer class="footer">
+        <div class="footer-middle">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="widget widget-about">
+                            <img src="/site/assets/images/logo.png" class="footer-logo" alt="Footer Logo" width="105"
+                                height="25">
+                            <p>Praesent dapibus, neque id cursus ucibus, tortor neque egestas augue, eu vulputate
+                                magna eros eu erat. </p>
+
+                            <div class="social-icons">
+                                <a href="#" class="social-icon" target="_blank" title="Facebook"><i
+                                        class="icon-facebook-f"></i></a>
+                                <a href="#" class="social-icon" target="_blank" title="Twitter"><i
+                                        class="icon-twitter"></i></a>
+                                <a href="#" class="social-icon" target="_blank" title="Instagram"><i
+                                        class="icon-instagram"></i></a>
+                                <a href="#" class="social-icon" target="_blank" title="Youtube"><i
+                                        class="icon-youtube"></i></a>
+                                <a href="#" class="social-icon" target="_blank" title="Pinterest"><i
+                                        class="icon-pinterest"></i></a>
+                            </div><!-- End .soial-icons -->
+                        </div><!-- End .widget about-widget -->
+                    </div><!-- End .col-sm-6 col-lg-3 -->
+
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="widget">
+                            <h4 class="widget-title">Useful Links</h4><!-- End .widget-title -->
+
+                            <ul class="widget-list">
+                                <li><a href="about.html">About Molla</a></li>
+                                <li><a href="#">How to shop on Molla</a></li>
+                                <li><a href="#">FAQ</a></li>
+                                <li><a href="contact.html">Contact us</a></li>
+                                <li><a href="login.html">Log in</a></li>
+                            </ul><!-- End .widget-list -->
+                        </div><!-- End .widget -->
+                    </div><!-- End .col-sm-6 col-lg-3 -->
+
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="widget">
+                            <h4 class="widget-title">Customer Service</h4><!-- End .widget-title -->
+
+                            <ul class="widget-list">
+                                <li><a href="#">Payment Methods</a></li>
+                                <li><a href="#">Money-back guarantee!</a></li>
+                                <li><a href="#">Returns</a></li>
+                                <li><a href="#">Shipping</a></li>
+                                <li><a href="#">Terms and conditions</a></li>
+                                <li><a href="#">Privacy Policy</a></li>
+                            </ul><!-- End .widget-list -->
+                        </div><!-- End .widget -->
+                    </div><!-- End .col-sm-6 col-lg-3 -->
+
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="widget">
+                            <h4 class="widget-title">My Account</h4><!-- End .widget-title -->
+
+                            <ul class="widget-list">
+                                <li><a href="#">Sign In</a></li>
+                                <li><a href="cart.html">View Cart</a></li>
+                                <li><a href="#">My Wishlist</a></li>
+                                <li><a href="#">Track My Order</a></li>
+                                <li><a href="#">Help</a></li>
+                            </ul><!-- End .widget-list -->
+                        </div><!-- End .widget -->
+                    </div><!-- End .col-sm-6 col-lg-3 -->
+                </div><!-- End .row -->
+            </div><!-- End .container -->
+        </div><!-- End .footer-middle -->
+
+        <div class="footer-bottom">
+            <div class="container">
+                <p class="footer-copyright">Copyright © 2019 Molla Store. All Rights Reserved.</p>
+                <!-- End .footer-copyright -->
+                <figure class="footer-payments">
+                    <img src="/site/assets/images/payments.png" alt="Payment methods" width="272" height="20">
+                </figure><!-- End .footer-payments -->
+            </div><!-- End .container -->
+        </div><!-- End .footer-bottom -->
+    </footer><!-- End .footer -->
+    </div><!-- End .page-wrapper -->
+    <button id="scroll-top" title="Back to Top"><i class="icon-arrow-up"></i></button>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu-overlay"></div><!-- End .mobil-menu-overlay -->
+
+    <div class="mobile-menu-container">
+        <div class="mobile-menu-wrapper">
+            <span class="mobile-menu-close"><i class="icon-close"></i></span>
+
+            <form action="#" method="get" class="mobile-search">
+                <label for="mobile-search" class="sr-only">Search</label>
+                <input type="search" class="form-control" name="mobile-search" id="mobile-search"
+                    placeholder="Search in..." required>
+                <button class="btn btn-primary" type="submit"><i class="icon-search"></i></button>
+            </form>
+
+            <nav class="mobile-nav">
+                <ul class="mobile-menu">
+                    <li class="active">
+                        <a href="index.html">Home</a>
+
+                        <ul>
+                            <li><a href="index-1.html">01 - furniture store</a></li>
+                            <li><a href="index-2.html">02 - furniture store</a></li>
+                            <li><a href="index-3.html">03 - electronic store</a></li>
+                            <li><a href="index-4.html">04 - electronic store</a></li>
+                            <li><a href="index-5.html">05 - fashion store</a></li>
+                            <li><a href="index-6.html">06 - fashion store</a></li>
+                            <li><a href="index-7.html">07 - fashion store</a></li>
+                            <li><a href="index-8.html">08 - fashion store</a></li>
+                            <li><a href="index-9.html">09 - fashion store</a></li>
+                            <li><a href="index-10.html">10 - shoes store</a></li>
+                            <li><a href="index-11.html">11 - furniture simple store</a></li>
+                            <li><a href="index-12.html">12 - fashion simple store</a></li>
+                            <li><a href="index-13.html">13 - market</a></li>
+                            <li><a href="index-14.html">14 - market fullwidth</a></li>
+                            <li><a href="index-15.html">15 - lookbook 1</a></li>
+                            <li><a href="index-16.html">16 - lookbook 2</a></li>
+                            <li><a href="index-17.html">17 - fashion store</a></li>
+                            <li><a href="index-18.html">18 - fashion store (with sidebar)</a></li>
+                            <li><a href="index-19.html">19 - games store</a></li>
+                            <li><a href="index-20.html">20 - book store</a></li>
+                            <li><a href="index-21.html">21 - sport store</a></li>
+                            <li><a href="index-22.html">22 - tools store</a></li>
+                            <li><a href="index-23.html">23 - fashion left navigation store</a></li>
+                            <li><a href="index-24.html">24 - extreme sport store</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="category.html">Shop</a>
+                        <ul>
+                            <li><a href="category-list.html">Shop List</a></li>
+                            <li><a href="category-2cols.html">Shop Grid 2 Columns</a></li>
+                            <li><a href="category.html">Shop Grid 3 Columns</a></li>
+                            <li><a href="category-4cols.html">Shop Grid 4 Columns</a></li>
+                            <li><a href="category-boxed.html"><span>Shop Boxed No Sidebar<span
+                                            class="tip tip-hot">Hot</span></span></a></li>
+                            <li><a href="category-fullwidth.html">Shop Fullwidth No Sidebar</a></li>
+                            <li><a href="product-category-boxed.html">Product Category Boxed</a></li>
+                            <li><a href="product-category-fullwidth.html"><span>Product Category Fullwidth<span
+                                            class="tip tip-new">New</span></span></a></li>
+                            <li><a href="cart.html">Cart</a></li>
+                            <li><a href="checkout.html">Checkout</a></li>
+                            <li><a href="wishlist.html">Wishlist</a></li>
+                            <li><a href="#">Lookbook</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="product.html" class="sf-with-ul">Product</a>
+                        <ul>
+                            <li><a href="product.html">Default</a></li>
+                            <li><a href="product-centered.html">Centered</a></li>
+                            <li><a href="product-extended.html"><span>Extended Info<span
+                                            class="tip tip-new">New</span></span></a></li>
+                            <li><a href="product-gallery.html">Gallery</a></li>
+                            <li><a href="product-sticky.html">Sticky Info</a></li>
+                            <li><a href="product-sidebar.html">Boxed With Sidebar</a></li>
+                            <li><a href="product-fullwidth.html">Full Width</a></li>
+                            <li><a href="product-masonry.html">Masonry Sticky Info</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">Pages</a>
+                        <ul>
+                            <li>
+                                <a href="about.html">About</a>
+
+                                <ul>
+                                    <li><a href="about.html">About 01</a></li>
+                                    <li><a href="about-2.html">About 02</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="contact.html">Contact</a>
+
+                                <ul>
+                                    <li><a href="contact.html">Contact 01</a></li>
+                                    <li><a href="contact-2.html">Contact 02</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="login.html">Login</a></li>
+                            <li><a href="faq.html">FAQs</a></li>
+                            <li><a href="404.html">Error 404</a></li>
+                            <li><a href="coming-soon.html">Coming Soon</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="blog.html">Blog</a>
+
+                        <ul>
+                            <li><a href="blog.html">Classic</a></li>
+                            <li><a href="blog-listing.html">Listing</a></li>
+                            <li>
+                                <a href="#">Grid</a>
+                                <ul>
+                                    <li><a href="blog-grid-2cols.html">Grid 2 columns</a></li>
+                                    <li><a href="blog-grid-3cols.html">Grid 3 columns</a></li>
+                                    <li><a href="blog-grid-4cols.html">Grid 4 columns</a></li>
+                                    <li><a href="blog-grid-sidebar.html">Grid sidebar</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#">Masonry</a>
+                                <ul>
+                                    <li><a href="blog-masonry-2cols.html">Masonry 2 columns</a></li>
+                                    <li><a href="blog-masonry-3cols.html">Masonry 3 columns</a></li>
+                                    <li><a href="blog-masonry-4cols.html">Masonry 4 columns</a></li>
+                                    <li><a href="blog-masonry-sidebar.html">Masonry sidebar</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#">Mask</a>
+                                <ul>
+                                    <li><a href="blog-mask-grid.html">Blog mask grid</a></li>
+                                    <li><a href="blog-mask-masonry.html">Blog mask masonry</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#">Single Post</a>
+                                <ul>
+                                    <li><a href="single.html">Default with sidebar</a></li>
+                                    <li><a href="single-fullwidth.html">Fullwidth no sidebar</a></li>
+                                    <li><a href="single-fullwidth-sidebar.html">Fullwidth with sidebar</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="elements-list.html">Elements</a>
+                        <ul>
+                            <li><a href="elements-products.html">Products</a></li>
+                            <li><a href="elements-typography.html">Typography</a></li>
+                            <li><a href="elements-titles.html">Titles</a></li>
+                            <li><a href="elements-banners.html">Banners</a></li>
+                            <li><a href="elements-product-category.html">Product Category</a></li>
+                            <li><a href="elements-video-banners.html">Video Banners</a></li>
+                            <li><a href="elements-buttons.html">Buttons</a></li>
+                            <li><a href="elements-accordions.html">Accordions</a></li>
+                            <li><a href="elements-tabs.html">Tabs</a></li>
+                            <li><a href="elements-testimonials.html">Testimonials</a></li>
+                            <li><a href="elements-blog-posts.html">Blog Posts</a></li>
+                            <li><a href="elements-portfolio.html">Portfolio</a></li>
+                            <li><a href="elements-cta.html">Call to Action</a></li>
+                            <li><a href="elements-icon-boxes.html">Icon Boxes</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav><!-- End .mobile-nav -->
+
+            <div class="social-icons">
+                <a href="#" class="social-icon" target="_blank" title="Facebook"><i class="icon-facebook-f"></i></a>
+                <a href="#" class="social-icon" target="_blank" title="Twitter"><i class="icon-twitter"></i></a>
+                <a href="#" class="social-icon" target="_blank" title="Instagram"><i class="icon-instagram"></i></a>
+                <a href="#" class="social-icon" target="_blank" title="Youtube"><i class="icon-youtube"></i></a>
+            </div><!-- End .social-icons -->
+        </div><!-- End .mobile-menu-wrapper -->
+    </div><!-- End .mobile-menu-container -->
+
+    <!-- Sign in / Register Modal -->
+
+
+    <!-- Plugins JS File -->
+    <script src="/site/assets/js/jquery.min.js"></script>
+    <script src="/site/assets/js/bootstrap.bundle.min.js"></script>
+    <script src="/site/assets/js/jquery.hoverIntent.min.js"></script>
+    <script src="/site/assets/js/jquery.waypoints.min.js"></script>
+    <script src="/site/assets/js/superfish.min.js"></script>
+    <script src="/site/assets/js/owl.carousel.min.js"></script>
+    <script src="/site/assets/js/bootstrap-input-spinner.js"></script>
+    <script src="/site/assets/js/jquery.elevateZoom.min.js"></script>
+    <script src="/site/assets/js/bootstrap-input-spinner.js"></script>
+    <script src="/site/assets/js/jquery.magnific-popup.min.js"></script>
+    <!-- Main JS File -->
+    <script src="/site/assets/js/main.js"></script>
+
+    <script>
+        var vue = new Vue({
+            el: '#myapp',
+            data: {
+                listProductDetails: [],
+                listVersion: [],
+                product: {},
+                version: {},
+                productDetails: {},
+                cart: {
+                    quantity: 1,
+                    productDetailsId: null
+                },
+                wishlist: {},
+                colorName: '',
+                statuStock :''
+
+
+
+            },
+            filters: {
+                customCurrency: function (input, symbol) {
+                    if (!input) return '';
+
+                    var sign = (symbol !== undefined) ? symbol : 'VNĐ';
+
+                    input = input.toFixed(0).replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1,");
+
+                    return input + ' ' + sign;
+                }
+            },
+            methods: {
+                getProduct() {
+                    var productCode = '[[${productCode}]]'
+                    var self = this
+                    axios.get('/dtdd/getProduct/' + productCode)
+                        .then(res => {
+                            self.product = res.data
+                            self.getVersionByProduct(self.product.productId)
+                        })
+                        .catch(error => {
+
+                        })
+                },
+                getColor(producVersionId) {
+
+                    const params = new URLSearchParams(window.location.search);
+                    const versionId = params.get('v')
+
+
+                    var self = this
+                    axios.get('/dtdd/getProductDetailsByVersion/' + producVersionId)
+                        .then(res => {
+
+
+                            let version = null
+                            if (self.listVersion && self.listVersion.length > 0) {
+                                const versionId = parseInt(producVersionId)
+                                version = self.listVersion.find(item => item.productVersionId === versionId)
+
+                            }
+
+                            let versionName = ''
+                            if (version) {
+                                versionName = version.versionName
+                                console.log(versionName)
+                            }
+
+                            self.listProductDetails = res.data
+                            self.version.versionName = versionName
+                            self.version.versionId = producVersionId;
+
+
+                            params.set('v', self.version.versionId);
+                            window.history.pushState({}, '', '?' + params.toString());
+
+                            if (self.listProductDetails.length === 0) {
+                                self.colorName = ''
+                                self.productDetails.productDetailsId = null
+                            }
+
+
+                            self.product.price = version.price
+                            self.product.discountedPrice = version.discountedPrice
+
+
+                            if (versionId != self.version.versionId) {
+
+                                params.delete('p'); // Xóa tham số color khỏi url
+                                window.history.pushState({}, '', '?' + params.toString()); // Cập nhật URL
+                                self.productDetails.productDetailsId = null
+                                self.colorName = null
+                                self.statuStock = null
+                                // this.product.image=this.product.image
+                            }
+
+                            if (self.listProductDetails.length > 0) {
+                                self.selectProductDetails(self.productDetails.productDetailsId)
+                            }
+
+
+                        })
+                        .catch(error => {
+
+                        })
+                }
+                , getVersionByProduct(productId) {
+
+                    var self = this
+                    axios.get('/dtdd/getVersionByProduct/' + productId)
+                        .then(res => {
+                            self.listVersion = res.data
+
+                            if (self.version.versionId !== undefined && self.version.versionId !== null) {
+                                console.log('đã chạy get color')
+                                self.getColor(self.version.versionId)
+                            }
+
+                        })
+                        .catch(error => {
+
+                        })
+                }
+                ,
+                selectProductDetails(productDetailsId) {
+
+
+                    this.productDetails.productDetailsId = productDetailsId
+
+                    console.log(productDetailsId)
+
+                    var product = this.listProductDetails.find(item => item.productDetailsId === parseInt(productDetailsId))
+
+                    this.colorName = product.color.name
+                    this.product.image = product.image
+                    this.statuStock = product.checkOutOfStockProducts?'Hết hàng':'Còn hàng'
+
+                    this.product.price = product.price
+                    this.product.discountedPrice = product.discountedPrice
+
+
+                    var params = new URLSearchParams(window.location.search);
+                    params.set('v', this.version.versionId);
+                    params.set('p', this.productDetails.productDetailsId);
+                    window.history.pushState({}, '', '?' + params.toString());
+
+
+
+                },
+                init() {
+                    this.getVersionByProduct()
+                    this.getColor()
+                    this.selectProductDetails()
+                },
+                addCart() {
+
+                    this.cart.productDetailsId = this.productDetails.productDetailsId
+
+                    // console.log(this.cart.productDetailsId +'demoooo')
+
+                    if (this.cart.productDetailsId == null || this.cart.productDetailsId == undefined) {
+
+                        $.toast({
+                            heading: 'Thông báo',
+                            text: "Vui lòng chọn màu sắc!",
+                            showHideTransition: 'slide',
+                            position: 'top-right',
+                            icon: 'error',
+                        })
+
+                        return
+                    }
+
+
+                    axios.post('/cart/insert', this.cart)
+                        .then(res => {
+
+                            $.toast({
+                                heading: 'Thành công',
+                                text: 'Thêm sản phẩm vào giỏ hàng thành công!',
+                                showHideTransition: 'slide',
+                                position: 'top-right',
+                                icon: 'success'
+                            })
+                        })
+                        .catch(error => {
+
+                            // alert(error.response.data.message);
+                            if (error.response.status === 401) {
+
+                                $.toast({
+                                    heading: 'Thông báo',
+                                    text: 'Vui lòng <a href="/login">đăng nhập</a> để thực hiện chức năng!',
+                                    showHideTransition: 'slide',
+                                    position: 'top-right',
+                                    icon: 'error',
+                                });
+
+                            } else if (error.response.status === 400) {
+                                $.toast({
+                                    heading: 'Thông báo',
+                                    text: error.response.data.message,
+                                    showHideTransition: 'slide',
+                                    position: 'top-right',
+                                    icon: 'error',
+                                })
+                            }
+
+
+
+                        })
+
+                },
+
+                addToWishlist() {
+                    var self = this;
+                    self.wishlist.productId = self.product.productId;
+                    axios.post('/addToWishlist', self.wishlist)
+                        .then(res => {
+
+                            $.toast({
+                                heading: 'Thành công',
+                                text: res.data,
+                                showHideTransition: 'slide',
+                                position: 'top-right',
+                                icon: 'success'
+                            })
+                        }).catch(err => {
+
+                            if (err.response.status === 401) {
+                                $.toast({
+                                    heading: 'Thông báo',
+                                    text: 'Vui lòng <a href="/login">đăng nhập</a> để thực hiện chức năng!',
+                                    showHideTransition: 'slide',
+                                    position: 'top-right',
+                                    icon: 'error'
+                                })
+                                // window.location.href = '/login';
+                            }
+
+
+                        });
+                }
+            }
+            ,
+            created() {
+
+                var params = new URLSearchParams(window.location.search);
+                this.version.versionId = params.get('v')
+                this.productDetails.productDetailsId = params.get('p')
+                this.getProduct()
+
+
+
+            }
+        })
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.1/jquery.toast.min.js"
+        integrity="sha512-zv5L1hY+PMayrX2l0ojsUqem6AHpdSIVyDJBlDQH/fMLpH1JgaxPTjpum1b1AlLHdARVonrpomps+GgR0oN3MA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.1/jquery.toast.js"
+        integrity="sha512-CwEY0URPo9ZtMMCpiW/mUx4iW2AseRWTbCEJZNoVr18gbFVIGmwztqu50C0LWwUYpA7PRgBXWard2HO4uwZDfA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</body>
+
+
+
+</html>

@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Skydash Admin</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="/vendors/feather/feather.css">
+    <link rel="stylesheet" href="/vendors/ti-icons/css/themify-icons.css">
+    <link rel="stylesheet" href="/vendors/css/vendor.bundle. base.css">
+    <!-- endinject -->
+    <!-- Plugin css for this page -->
+    <link rel="stylesheet" href="/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
+    <link rel="stylesheet" href="/vendors/ti-icons/css/themify-icons.css">
+    <link rel="stylesheet" type="text/css" href="js/select.dataTables.min.css">
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="/css/vertical-layout-light/style.css">
+    <link rel="stylesheet" href="/vendors/select2/select2.min.css">
+    <link rel="stylesheet" href="/vendors/select2-bootstrap-theme/select2-bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <!-- endinject -->
+    <link rel="shortcut icon" href="/images/favicon.png" />
+</head>
+
+<body>
+    <div class="container-scroller">
+        <!-- partial:partials/_navbar.html -->
+        <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+            <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+
+            </div>
+            <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+                <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+                    <span class="icon-menu"></span>
+                </button>
+                <ul class="navbar-nav mr-lg-2">
+                    <li class="nav-item nav-search d-none d-lg-block">
+                        <div class="input-group">
+                            <div class="input-group-prepend hover-cursor" id="navbar-search-icon">
+                                <span class="input-group-text" id="search">
+                                    <i class="icon-search"></i>
+                                </span>
+                            </div>
+                            <input type="text" class="form-control" id="navbar-search-input" placeholder="Search now"
+                                aria-label="search" aria-describedby="search">
+                        </div>
+                    </li>
+                </ul>
+                <ul class="navbar-nav navbar-nav-right">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#"
+                            data-toggle="dropdown">
+                            <i class="icon-bell mx-0"></i>
+                            <span class="count"></span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list"
+                            aria-labelledby="notificationDropdown">
+                            <p class="mb-0 font-weight-normal float-left dropdown-header">Notifications</p>
+                            <a class="dropdown-item preview-item">
+                                <div class="preview-thumbnail">
+                                    <div class="preview-icon bg-success">
+                                        <i class="ti-info-alt mx-0"></i>
+                                    </div>
+                                </div>
+                                <div class="preview-item-content">
+                                    <h6 class="preview-subject font-weight-normal">Application Error</h6>
+                                    <p class="font-weight-light small-text mb-0 text-muted">
+                                        Just now
+                                    </p>
+                                </div>
+                            </a>
+                            <a class="dropdown-item preview-item">
+                                <div class="preview-thumbnail">
+                                    <div class="preview-icon bg-warning">
+                                        <i class="ti-settings mx-0"></i>
+                                    </div>
+                                </div>
+                                <div class="preview-item-content">
+                                    <h6 class="preview-subject font-weight-normal">Settings</h6>
+                                    <p class="font-weight-light small-text mb-0 text-muted">
+                                        Private message
+                                    </p>
+                                </div>
+                            </a>
+                            <a class="dropdown-item preview-item">
+                                <div class="preview-thumbnail">
+                                    <div class="preview-icon bg-info">
+                                        <i class="ti-user mx-0"></i>
+                                    </div>
+                                </div>
+                                <div class="preview-item-content">
+                                    <h6 class="preview-subject font-weight-normal">New user registration</h6>
+                                    <p class="font-weight-light small-text mb-0 text-muted">
+                                        2 days ago
+                                    </p>
+                                </div>
+                            </a>
+                        </div>
+                    </li>
+                    <li class="nav-item nav-profile dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
+                            <img src="images/faces/face28.jpg" alt="profile" />
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right navbar-dropdown"
+                            aria-labelledby="profileDropdown">
+                            <a class="dropdown-item">
+                                <i class="ti-settings text-primary"></i>
+                                Settings
+                            </a>
+                            <a class="dropdown-item">
+                                <i class="ti-power-off text-primary"></i>
+                                Logout
+                            </a>
+                        </div>
+                    </li>
+
+                </ul>
+                <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
+                    data-toggle="offcanvas">
+                    <span class="icon-menu"></span>
+                </button>
+            </div>
+        </nav>
+        <!-- partial -->
+        <div class="container-fluid page-body-wrapper">
+            <!-- partial:partials/_settings-panel.html -->
+            <div class="theme-setting-wrapper">
+                <div id="settings-trigger"><i class="ti-settings"></i></div>
+                <div id="theme-settings" class="settings-panel">
+                    <i class="settings-close ti-close"></i>
+                    <p class="settings-heading">SIDEBAR SKINS</p>
+                    <div class="sidebar-bg-options selected" id="sidebar-light-theme">
+                        <div class="img-ss rounded-circle bg-light border mr-3"></div>Light
+                    </div>
+                    <div class="sidebar-bg-options" id="sidebar-dark-theme">
+                        <div class="img-ss rounded-circle bg-dark border mr-3"></div>Dark
+                    </div>
+                    <p class="settings-heading mt-2">HEADER SKINS</p>
+                    <div class="color-tiles mx-0 px-4">
+                        <div class="tiles success"></div>
+                        <div class="tiles warning"></div>
+                        <div class="tiles danger"></div>
+                        <div class="tiles info"></div>
+                        <div class="tiles dark"></div>
+                        <div class="tiles default"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- partial -->
+            <!-- partial:partials/_sidebar.html -->
+            <nav class="sidebar sidebar-offcanvas" id="sidebar">
+                <ul class="nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">
+                            <i class="icon-grid menu-icon"></i>
+                            <span class="menu-title">Trang chủ</span>
+                        </a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false"
+                            aria-controls="ui-basic">
+                            <i class="icon-layout menu-icon"></i>
+                            <span class="menu-title">Sản phẩm</span>
+                            <i class="menu-arrow"></i>
+                        </a>
+                        <div class="collapse" id="ui-basic">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item"> <a class="nav-link" href="">Sản phẩm</a></li>
+                                <!-- <li class="nav-item"> <a class="nav-link" href="pages/ui-features/dropdowns.html"></a></li> -->
+                                <li class="nav-item"> <a class="nav-link" href="">Thương hiệu</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#form-elements" aria-expanded="false"
+                            aria-controls="form-elements">
+                            <i class="icon-columns menu-icon"></i>
+                            <span class="menu-title">Đơn hàng</span>
+                            <i class="menu-arrow"></i>
+                        </a>
+                        <div class="collapse" id="form-elements">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item"><a class="nav-link" href="">DS Đơn</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#charts" aria-expanded="false"
+                            aria-controls="charts">
+                            <i class="icon-bar-graph menu-icon"></i>
+                            <span class="menu-title">Doanh mục</span>
+                            <i class="menu-arrow"></i>
+                        </a>
+                        <div class="collapse" id="charts">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item"> <a class="nav-link" href="pages/charts/chartjs.html">Thêm doanh
+                                        mục</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#tables" aria-expanded="false"
+                            aria-controls="tables">
+                            <i class="icon-grid-2 menu-icon"></i>
+                            <span class="menu-title">Quản lí tài khoản</span>
+                            <i class="menu-arrow"></i>
+                        </a>
+                        <div class="collapse" id="tables">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item"> <a class="nav-link" href="pages/tables/basic-table.html">Thêm tài
+                                        khoản</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#icons" aria-expanded="false"
+                            aria-controls="icons">
+                            <i class="icon-contract menu-icon"></i>
+                            <span class="menu-title">Thống kê</span>
+                            <i class="menu-arrow"></i>
+                        </a>
+                        <div class="collapse" id="icons">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item"> <a class="nav-link" href="pages/icons/mdi.html">Mdi icons</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false"
+                            aria-controls="auth">
+                            <i class="icon-head menu-icon"></i>
+                            <span class="menu-title">User Pages</span>
+                            <i class="menu-arrow"></i>
+                        </a>
+                        <div class="collapse" id="auth">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html"> Login </a>
+                                </li>
+                                <li class="nav-item"> <a class="nav-link" href="pages/samples/register.html"> Register
+                                    </a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#error" aria-expanded="false"
+                            aria-controls="error">
+                            <i class="icon-ban menu-icon"></i>
+                            <span class="menu-title">Error pages</span>
+                            <i class="menu-arrow"></i>
+                        </a>
+                        <div class="collapse" id="error">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item"> <a class="nav-link" href="pages/samples/error-404.html"> 404 </a>
+                                </li>
+                                <li class="nav-item"> <a class="nav-link" href="pages/samples/error-500.html"> 500 </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+                </ul>
+            </nav>
+            <!-- partial -->
+            <div class="main-panel">
+                <div class="content-wrapper">
+                    <div class="row">
+                        <div class="col-md-12 grid-margin">
+                            <div class="row ml-2">
+
+                                <button type="button" class="btn btn-success" data-toggle="modal" onclick="clearForm()"
+                                    data-target="#exampleModal">
+                                    <i class='bx bx-plus'></i> Thêm thương hiệu
+                                </button>
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Thương hiệu</h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+
+                                            <div class="modal-body">
+                                                <input type="text" name="" id="brandId" hidden>
+                                                <form class="forms-sample">
+                                                    <div class="form-group">
+                                                        <label for="exampleInputName1">Name</label>
+                                                        <input type="text" class="form-control" id="brand-name"
+                                                            placeholder="Name">
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label>File upload</label>
+                                                        <input type="file" name="img" class="file-upload-default"
+                                                            id="brand-logo">
+                                                        <div class="input-group col-xs-12">
+                                                            <input type="text" class="form-control file-upload-info"
+                                                                disabled placeholder="Upload Image" id="upload-image">
+                                                            <span class="input-group-append">
+                                                                <button class="file-upload-browse btn btn-primary"
+                                                                    type="button">Upload</button>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <button type="button" onclick="add()"
+                                                        class="btn btn-primary mr-2">Submit</button>
+                                                    <button class="btn btn-light">Cancel</button>
+                                                </form>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-md-12 grid-margin stretch-card">
+                            <div class="card">
+                                <div class="card-body">
+                                    <p class="card-title">Advanced Table</p>
+
+                                    <div class="d-flex justify-content-end mb-2">
+                                        <select onchange="setSize(this.value)" id="sizeSelect">
+                                            <option value="1">1</option>
+                                            <option value="3">3</option>
+                                            <option value="6">6</option>
+                                            <option value="9">9</option>
+                                            <option value="12">12</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="row" id="pagination-container">
+                                        <div class="col-12">
+                                            <div class="table-responsive">
+                                                <table id="" class="display expandable-table" style="width:100%">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Ảnh</th>
+                                                            <th>Id</th>
+                                                            <th>Tên thương hiệu</th>
+
+                                                            <th>Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="tbody">
+
+                                                    </tbody>
+                                                </table>
+
+                                                <nav class="d-flex justify-content-end mt-3">
+                                                    <ul class="pagination">
+
+                                                    </ul>
+                                                </nav>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+                <!-- content-wrapper ends -->
+                <!-- partial:partials/_footer.html -->
+                <footer class="footer">
+                    <div class="d-sm-flex justify-content-center justify-content-sm-between">
+                        <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2021.
+                            Premium <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap admin
+                                template</a> from BootstrapDash.
+                            All rights reserved.</span>
+                        <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made
+                            with <i class="ti-heart text-danger ml-1"></i></span>
+                    </div>
+                    <div class="d-sm-flex justify-content-center justify-content-sm-between">
+                        <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Distributed by <a
+                                href="https://www.themewagon.com/" target="_blank">Themewagon</a></span>
+                    </div>
+                </footer>
+                <!-- partial -->
+            </div>
+            <!-- main-panel ends -->
+        </div>
+        <!-- page-body-wrapper ends -->
+    </div>
+    <!-- container-scroller -->
+    <script src="https://code.jquery.com/jquery-3.6.4.js"
+        integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
+    <script>
+      
+        var matchPage = window.location.search.match(/page=(\d+)/);
+        var match = window.location.search.match(/size=(\d+)/);
+        var size = match ? match[1] : 2;
+        var page = matchPage ? matchPage[1] : 1;
+        $("#sizeSelect").val(size).find("option[value=" + size + "]").attr("selected", true);
+
+        goToPage(page)
+
+        function goToPage(pageNumber) {
+
+            page = pageNumber
+            // Thực hiện AJAX call để lấy dữ liệu trang mới
+            $.get("/admin/brand/pagination?page=" + page + "&size=" + size)
+                .then(function (response) {
+
+                    var brands = response.content;
+
+                    // Cập nhật nội dung HTML cho danh sách các brand
+                    var html = "";
+                    brands.forEach(function (brand) {
+                        html += "<tr>";
+                        html += "<td><img src='/phonestore/images/" + brand.logo + "' height='50px'></td>";
+                        html += "<td>" + brand.brandId + "</td>";
+                        html += "<td>" + brand.name + "</td>";
+                        html += "<td> <a onclick=\"edit('" + brand.brandId + "')\" class=\"btn btn-primary px-3 py-2\" id=\"editButton\"> <i class='bx bxs-pencil'></i> Edit</a>";
+                        html += " <a onclick=\"deleteBrand('" + brand.brandId + "')\" class=\"btn btn-pinterest px-3 py-2\" id=\"editButton\"> <i class='bx bxs-trash'></i> Xóa</a> </td>";
+                        html += "</tr>";
+                    });
+                    $("tbody").html(html);
+
+                    // Đổ dữ liệu vào nút phân trang
+                    var ul = $("#pagination-container .pagination");
+                    ul.empty();
+
+                    var totalPages = response.totalPages;
+                    var currentPage = page;
+                    var limit = 5; // Hiển thị tối đa 5 trang
+
+                    // Thêm nút "First"
+                    var liFirst = $("<li>").addClass("page-item").appendTo(ul);
+                    var aFirst = $("<a>").addClass("page-link").attr("onclick", "goToPage(1)").text("First").appendTo(liFirst);
+                    if (currentPage == 1) {
+                        liFirst.addClass("disabled");
+                    }
+
+                    // Tính toán phạm vi hiển thị các nút phân trang
+                    var startPage = Math.max(1, currentPage - Math.floor(limit / 2));
+                    var endPage = Math.min(totalPages, startPage + limit - 1);
+                    if (endPage - startPage < limit - 1) {
+                        startPage = Math.max(1, endPage - limit + 1);
+                    }
+
+                    // Thêm các nút phân trang
+                    for (var i = startPage; i <= endPage; i++) {
+                        var li = $("<li>").addClass("page-item").appendTo(ul);
+                        var a = $("<a>").addClass("page-link").attr("onclick", "goToPage(" + i + ")").text(i).appendTo(li);
+                        if (i == currentPage) {
+                            li.addClass("active");
+                        }
+                    }
+
+                    // Thêm nút "Last"
+                    var liLast = $("<li>").addClass("page-item").appendTo(ul);
+                    var aLast = $("<a>").addClass("page-link").attr("onclick", "goToPage(" + totalPages + ")").text("Last").appendTo(liLast);
+                    if (currentPage == totalPages) {
+                        liLast.addClass("disabled");
+                    }
+
+                    history.pushState("", "", "/admin/brand/add?page=" + pageNumber + "?size=" + size)
+
+                });
+        }
+
+        function edit(id) {
+
+            $.get("/admin/brand/find/" + id, function (brand, status) {
+                clearForm()
+                $('#brandId').val(brand.brandId);
+                $('#brand-name').val(brand.name);
+                $('#upload-image').val(brand.logo)
+
+            });
+            $('#exampleModal').modal();
+
+        }
+
+        function deleteBrand(id) {
+            $.ajax({
+                url: '/admin/brand/delete/' + id,
+                type: 'get',
+
+                success: function (data) {
+                    goToPage(page)
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                        }
+
+                    })
+
+                    Toast.fire({
+                        icon: 'success',
+                        title: 'Xóa thương hiệu thành công'
+                    })
+
+                },
+                error: function (xhr, status, error) {
+
+                    Swal.fire(
+                        'Lỗi',
+                        'Xóa thương hiệu không thành công',
+                        'error'
+                    );
+                }
+            });
+        }
+
+        function setSize(value) {
+            size = value
+            page = 1;
+            $("#sizeSelect").val(size).find("option[value=" + size + "]").attr("selected", true);
+            goToPage(page)
+        }
+
+
+        function add() {
+            var name = $('#brand-name').val()
+            var id = $('#brandId').val()
+
+            var formData = new FormData();
+
+            var fileInput = $('#brand-logo')[0];
+
+            if (fileInput.files.length > 0) {
+                formData.append('logo', fileInput.files[0]);
+                // Gửi formData tới server
+               
+            }
+
+            formData.append('name', name);
+            formData.append('brandId', id)
+
+            $.ajax({
+                url: '/admin/brand/insert',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    clearForm()
+                    goToPage(page)
+                    if (id) {
+                        Swal.fire(
+                            'Thông báo',
+                            'Cật nhật thương hiệu thành công',
+                            'success'
+                        );
+                    } else {
+                        Swal.fire(
+                            'Thông báo',
+                            'Thêm thương hiệu thành công',
+                            'success'
+                        );
+                    }
+                },
+                error: function (xhr, status, error) {
+
+                    Swal.fire(
+                        'Lỗi',
+                        'Thêm thương hiệu không thành công',
+                        'error'
+                    );
+                }
+            });
+
+        }
+
+        function clearForm() {
+
+            $('#brandId').val('');
+            $('#brand-name').val('');
+            $('#upload-image').val('')
+            $('#brand-logo').val('')
+        }
+
+        const inputElement = document.querySelector('input[type="file"]');
+
+        document.querySelector('.file-upload-browse').addEventListener('click', (event) => {
+
+            event.preventDefault();
+
+            inputElement.click();
+        });
+
+
+        inputElement.addEventListener('change', (event) => {
+
+            const selectedFiles = inputElement.files;
+            const fileName = selectedFiles[0].name;
+            // Hiển thị tên tệp lên thẻ HTML
+            const fileNameElement = document.querySelector('.file-upload-info');
+            fileNameElement.value = fileName;
+            fileNameElement.disabled = true;
+        });
+    </script>
+    <!-- plugins:js -->
+    <script src="/vendors/js/vendor.bundle.base.js"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page -->
+    <script src="/vendors/chart.js/Chart.min.js"></script>
+    <script src="/vendors/datatables.net/jquery.dataTables.js"></script>
+    <script src="/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
+    <script src="/js/dataTables.select.min./"></script>
+
+    <!-- End plugin / for this page -->
+    <!-- inject:js -->
+    <script src="/js/off-canvas.js"></script>
+    <script src="/js/hoverable-collapse.js"></script>
+    <script src="/js/template.js"></script>
+    <script src="/js/settings.js"></script>
+    <script src="/js/todolist.js"></script>
+    <!-- endinject -->
+    <!-- Custom js for this page-->
+    <script src="js/dashboard.js"></script>
+    <script src="js/Chart.roundedBarCharts.js"></script>
+    <script src="/js/select2.js"></script>
+    <script src="/vendors/select2/select2.min.js"></script>
+    <!-- End custom js for this page-->
+</body>
+
+</html>
